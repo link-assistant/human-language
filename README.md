@@ -1,10 +1,10 @@
 # Human Language Project
 
-> A sophisticated web application for transforming natural language into Wikidata entity and property sequences, enabling semantic understanding and knowledge representation.
+> A sophisticated web application for transforming natural language into Wikidata entity and relation sequences, enabling semantic understanding and knowledge representation.
 
 ## 🎯 Vision
 
-The Human Language project aims to create a universal meta-language that bridges all human languages by leveraging Wikidata's semantic knowledge graph. By converting natural language into sequences of entities (Q) and properties (P), we enable:
+The Human Language project aims to create a universal meta-language that bridges all human languages by leveraging Wikidata's semantic knowledge graph. By converting natural language into sequences of entities (Q) and relations (P), we enable:
 
 - **Cross-linguistic understanding**: Unified representation across all languages
 - **Semantic precision**: Disambiguation of concepts using Wikidata's rich ontology
@@ -31,12 +31,12 @@ This project will fundamentally transform how we store, access, and verify human
 - **Real-time transformation**: Interactive web demo at `transformation/index.html`
 - [Learn more →](transformation/README.md)
 
-### 2. Entity & Property Viewer
+### 2. Entity & Relations Viewer
 - **Beautiful UI**: Modern, responsive interface with dark/light themes
 - **Multi-language support**: Automatic language detection and switching
-- **Rich statements display**: View all properties and relationships
+- **Rich statements display**: View all relations and relationships
 - **Direct Wikidata links**: Seamlessly navigate to source data
-- View entities at `entities.html` and properties at `properties.html`
+- View entities at `entities.html` and relations at `properties.html`
 
 ### 3. Advanced Search & Disambiguation
 - **Exact & fuzzy matching**: Find entities even with typos

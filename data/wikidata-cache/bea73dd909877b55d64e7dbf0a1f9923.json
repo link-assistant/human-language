@@ -105,32 +105,32 @@
         ]
       },
       {
-        "id": "Q33569",
-        "title": "Q33569",
-        "pageid": 36405,
-        "concepturi": "http://www.wikidata.org/entity/Q33569",
+        "id": "Q697407",
+        "title": "Q697407",
+        "pageid": 656723,
+        "concepturi": "http://www.wikidata.org/entity/Q697407",
         "repository": "wikidata",
-        "url": "//www.wikidata.org/wiki/Q33569",
+        "url": "//www.wikidata.org/wiki/Q697407",
         "display": {
           "label": {
-            "value": "Hawaiian",
+            "value": "Hawaii Five-O",
             "language": "en"
           },
           "description": {
-            "value": "Polynesian language",
+            "value": "1968 American TV series",
             "language": "en"
           }
         },
-        "label": "Hawaiian",
-        "description": "Polynesian language",
+        "label": "Hawaii Five-O",
+        "description": "1968 American TV series",
         "match": {
           "type": "label",
           "language": "en",
-          "text": "Hawaiian"
+          "text": "Hawaii Five-O"
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P4365",
         "title": "Property:P4365",
@@ -163,7 +163,7 @@
     ],
     "total": 6
   },
-  "timestamp": 1753634606784,
+  "timestamp": 1757530492179,
   "ttl": 86400000,
   "query": "Hawaii",
   "languages": "en",

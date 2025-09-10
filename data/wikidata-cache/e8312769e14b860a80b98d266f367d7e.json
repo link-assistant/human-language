@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634609340,
+  "timestamp": 1757530493922,
   "ttl": 86400000,
   "query": "Einstein discovered the",
   "languages": "en",

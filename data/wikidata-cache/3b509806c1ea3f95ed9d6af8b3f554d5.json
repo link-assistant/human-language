@@ -127,10 +127,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634610251,
+  "timestamp": 1757530494451,
   "ttl": 86400000,
   "query": "fuzzy_Albert Einstein",
   "languages": "en",

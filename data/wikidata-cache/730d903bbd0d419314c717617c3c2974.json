@@ -112,10 +112,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634609698,
+  "timestamp": 1757530494104,
   "ttl": 86400000,
   "query": "the theory of",
   "languages": "en",

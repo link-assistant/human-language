@@ -127,10 +127,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634609551,
+  "timestamp": 1757530493999,
   "ttl": 86400000,
   "query": "relativity",
   "languages": "en",

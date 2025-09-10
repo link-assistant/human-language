@@ -133,7 +133,7 @@
         ]
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P4636",
         "title": "Property:P4636",
@@ -166,7 +166,7 @@
     ],
     "total": 6
   },
-  "timestamp": 1753634618004,
+  "timestamp": 1757530499426,
   "ttl": 86400000,
   "query": "Juliet",
   "languages": "en",

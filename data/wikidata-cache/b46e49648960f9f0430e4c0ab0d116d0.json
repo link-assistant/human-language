@@ -127,10 +127,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634617992,
+  "timestamp": 1757530499427,
   "ttl": 86400000,
   "query": "Romeo and Juliet",
   "languages": "en",

@@ -133,7 +133,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P2388",
         "title": "Property:P2388",
@@ -195,7 +195,7 @@
     ],
     "total": 7
   },
-  "timestamp": 1753634615486,
+  "timestamp": 1757530497481,
   "ttl": 86400000,
   "query": "fuzzy_Secretary",
   "languages": "en",

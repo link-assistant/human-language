@@ -127,10 +127,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634610386,
+  "timestamp": 1757530494526,
   "ttl": 86400000,
   "query": "fuzzy_theory of relativity",
   "languages": "en",

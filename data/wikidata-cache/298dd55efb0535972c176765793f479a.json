@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634617661,
+  "timestamp": 1757530499248,
   "ttl": 86400000,
   "query": "Shakespeare wrote Romeo",
   "languages": "en",

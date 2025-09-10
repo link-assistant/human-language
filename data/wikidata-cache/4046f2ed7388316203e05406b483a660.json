@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634619379,
+  "timestamp": 1757530500678,
   "ttl": 86400000,
   "query": "fuzzy_discovered relativity",
   "languages": "en",

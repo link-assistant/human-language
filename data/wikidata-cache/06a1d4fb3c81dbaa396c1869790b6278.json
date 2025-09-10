@@ -131,10 +131,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634615436,
+  "timestamp": 1757530497410,
   "ttl": 86400000,
   "query": "fuzzy_United Nations Secretary",
   "languages": "en",

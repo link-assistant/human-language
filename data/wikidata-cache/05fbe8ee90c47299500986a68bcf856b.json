@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634616912,
+  "timestamp": 1757530498547,
   "ttl": 86400000,
   "query": "fuzzy_became the President",
   "languages": "en",

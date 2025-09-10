@@ -127,10 +127,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634609705,
+  "timestamp": 1757530494100,
   "ttl": 86400000,
   "query": "theory of relativity",
   "languages": "en",

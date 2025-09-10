@@ -27,10 +27,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 1
   },
-  "timestamp": 1753634616248,
+  "timestamp": 1757530498049,
   "ttl": 86400000,
   "query": "became the",
   "languages": "en",

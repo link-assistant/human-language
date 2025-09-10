@@ -133,7 +133,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P6347",
         "title": "Property:P6347",
@@ -163,7 +163,7 @@
     ],
     "total": 6
   },
-  "timestamp": 1753634608158,
+  "timestamp": 1757530493116,
   "ttl": 86400000,
   "query": "the White",
   "languages": "en",

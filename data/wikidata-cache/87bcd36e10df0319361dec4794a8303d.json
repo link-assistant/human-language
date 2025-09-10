@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753619281818,
+  "timestamp": 1757530499200,
   "ttl": 86400000,
   "query": "Shakespeare",
   "languages": "en",

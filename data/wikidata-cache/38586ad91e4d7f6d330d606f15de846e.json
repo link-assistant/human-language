@@ -136,7 +136,7 @@
         ]
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P35",
         "title": "Property:P35",
@@ -169,7 +169,7 @@
     ],
     "total": 6
   },
-  "timestamp": 1753634612541,
+  "timestamp": 1757530495914,
   "ttl": 86400000,
   "query": "States",
   "languages": "en",

@@ -27,10 +27,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 1
   },
-  "timestamp": 1753634616244,
+  "timestamp": 1757530498091,
   "ttl": 86400000,
   "query": "of the United",
   "languages": "en",

@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634606370,
+  "timestamp": 1757530491878,
   "ttl": 86400000,
   "query": "Obama was",
   "languages": "en",

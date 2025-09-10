@@ -1,7 +1,7 @@
 {
   "data": {
     "entities": [],
-    "properties": [
+    "relations": [
       {
         "id": "P800",
         "title": "Property:P800",
@@ -92,7 +92,7 @@
     ],
     "total": 3
   },
-  "timestamp": 1753634618038,
+  "timestamp": 1757530499453,
   "ttl": 86400000,
   "query": "fuzzy_wrote",
   "languages": "en",

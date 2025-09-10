@@ -130,10 +130,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634616257,
+  "timestamp": 1757530498071,
   "ttl": 86400000,
   "query": "became",
   "languages": "en",

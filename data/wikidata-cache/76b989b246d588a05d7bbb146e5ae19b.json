@@ -139,10 +139,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634614811,
+  "timestamp": 1757530497034,
   "ttl": 86400000,
   "query": "Nations",
   "languages": "en",

@@ -77,10 +77,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 3
   },
-  "timestamp": 1753634616275,
+  "timestamp": 1757530498089,
   "ttl": 86400000,
   "query": "Hawaii and",
   "languages": "en",

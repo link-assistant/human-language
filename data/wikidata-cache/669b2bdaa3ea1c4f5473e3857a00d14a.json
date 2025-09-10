@@ -131,10 +131,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634614792,
+  "timestamp": 1757530497011,
   "ttl": 86400000,
   "query": "United Nations Secretary",
   "languages": "en",

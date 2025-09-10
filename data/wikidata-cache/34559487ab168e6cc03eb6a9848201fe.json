@@ -27,10 +27,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 1
   },
-  "timestamp": 1753634614134,
+  "timestamp": 1757530496277,
   "ttl": 86400000,
   "query": "fuzzy_of America",
   "languages": "en",

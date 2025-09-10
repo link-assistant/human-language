@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634616259,
+  "timestamp": 1757530498038,
   "ttl": 86400000,
   "query": "Hawaii and became",
   "languages": "en",

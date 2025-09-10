@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634617974,
+  "timestamp": 1757530499982,
   "ttl": 86400000,
   "query": "fuzzy_Shakespeare wrote Romeo",
   "languages": "en",

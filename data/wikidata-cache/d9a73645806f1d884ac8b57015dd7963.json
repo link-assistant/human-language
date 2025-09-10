@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634617994,
+  "timestamp": 1757530499939,
   "ttl": 86400000,
   "query": "and Juliet",
   "languages": "en",

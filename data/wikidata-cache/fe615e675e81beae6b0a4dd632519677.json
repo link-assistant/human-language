@@ -133,10 +133,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634608145,
+  "timestamp": 1757530493153,
   "ttl": 86400000,
   "query": "White",
   "languages": "en",

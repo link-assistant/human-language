@@ -133,7 +133,7 @@
         ]
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P4636",
         "title": "Property:P4636",
@@ -166,7 +166,7 @@
     ],
     "total": 6
   },
-  "timestamp": 1753634618731,
+  "timestamp": 1757530499809,
   "ttl": 86400000,
   "query": "fuzzy_Juliet",
   "languages": "en",

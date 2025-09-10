@@ -1,7 +1,7 @@
 {
   "data": {
     "entities": [],
-    "properties": [
+    "relations": [
       {
         "id": "P575",
         "title": "Property:P575",
@@ -121,7 +121,7 @@
     ],
     "total": 4
   },
-  "timestamp": 1753634609562,
+  "timestamp": 1757530494091,
   "ttl": 86400000,
   "query": "fuzzy_discovered",
   "languages": "en",

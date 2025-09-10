@@ -133,7 +133,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P3975",
         "title": "Property:P3975",
@@ -166,7 +166,7 @@
     ],
     "total": 6
   },
-  "timestamp": 1753634615515,
+  "timestamp": 1757530497492,
   "ttl": 86400000,
   "query": "fuzzy_Secretary General",
   "languages": "en",

@@ -12,7 +12,7 @@ const CACHE_CONFIG = {
   VERSION: 1,
   STORES: {
     ENTITIES: 'entities',
-    PROPERTIES: 'properties'
+    PROPERTIES: 'relations'
   }
 };
 
@@ -52,7 +52,7 @@ class WikidataAPIClient {
   /**
    * Fetch entities from Wikidata API
    * @param {string|Array} ids - Entity IDs to fetch
-   * @param {string} props - Properties to fetch (labels|descriptions|claims)
+   * @param {string} props - Relations to fetch (labels|descriptions|claims)
    * @param {string} languages - Languages to fetch
    * @returns {Promise<Object>} - API response
    */
@@ -74,7 +74,7 @@ class WikidataAPIClient {
   }
 
   /**
-   * Fetch a single entity with all properties
+   * Fetch a single entity with all relations
    * @param {string} entityId - Entity ID (e.g., 'Q42')
    * @param {string} languages - Languages to fetch
    * @returns {Promise<Object>} - Entity data
@@ -107,12 +107,12 @@ class WikidataAPIClient {
   }
 
   /**
-   * Search for entities and properties that match an exact word sequence
+   * Search for entities and relations that match an exact word sequence
    * @param {string} query - Exact word sequence to search for
    * @param {string} languages - Languages to search in (default: 'en')
    * @param {number} limit - Maximum number of results (default: 50)
    * @param {string} type - Type to search for: 'item', 'property', or 'both' (default: 'both')
-   * @returns {Promise<Object>} - Search results with entities and properties
+   * @returns {Promise<Object>} - Search results with entities and relations
    */
   async searchExactMatch(query, languages = 'en', limit = 50, type = 'both') {
     // Check cache first
@@ -125,7 +125,7 @@ class WikidataAPIClient {
     console.log(`API call for: ${query}`);
     const results = {
       entities: [],
-      properties: [],
+      relations: [],
       total: 0
     };
 
@@ -148,7 +148,7 @@ class WikidataAPIClient {
         }
       }
 
-      // Search for properties
+      // Search for relations
       if (type === 'both' || type === 'property') {
         const propertyUrl = this.buildApiUrl({
           action: 'wbsearchentities',
@@ -162,11 +162,11 @@ class WikidataAPIClient {
         const propertyResponse = await fetch(propertyUrl);
         if (propertyResponse.ok) {
           const propertyData = await propertyResponse.json();
-          results.properties = propertyData.search || [];
+          results.relations = propertyData.search || [];
         }
       }
 
-      results.total = results.entities.length + results.properties.length;
+      results.total = results.entities.length + results.relations.length;
       
       // Cache the results for 24 hours
       await this.cache.set(query, results, languages, limit, type, 24 * 60 * 60 * 1000);
@@ -180,12 +180,12 @@ class WikidataAPIClient {
   }
 
   /**
-   * Search for entities and properties with fuzzy matching
+   * Search for entities and relations with fuzzy matching
    * @param {string} query - Query string to search for
    * @param {string} languages - Languages to search in (default: 'en')
    * @param {number} limit - Maximum number of results (default: 50)
    * @param {string} type - Type to search for: 'item', 'property', or 'both' (default: 'both')
-   * @returns {Promise<Object>} - Search results with entities and properties
+   * @returns {Promise<Object>} - Search results with entities and relations
    */
   async searchFuzzy(query, languages = 'en', limit = 50, type = 'both') {
     // Check cache first
@@ -200,7 +200,7 @@ class WikidataAPIClient {
     
     const results = {
       entities: [],
-      properties: [],
+      relations: [],
       total: 0
     };
 
@@ -223,7 +223,7 @@ class WikidataAPIClient {
         }
       }
 
-      // Search for properties
+      // Search for relations
       if (type === 'both' || type === 'property') {
         const propertyUrl = this.buildApiUrl({
           action: 'wbsearchentities',
@@ -237,11 +237,11 @@ class WikidataAPIClient {
         const propertyResponse = await fetch(propertyUrl);
         if (propertyResponse.ok) {
           const propertyData = await propertyResponse.json();
-          results.properties = propertyData.search || [];
+          results.relations = propertyData.search || [];
         }
       }
 
-      results.total = results.entities.length + results.properties.length;
+      results.total = results.entities.length + results.relations.length;
       
       // Cache the results for 24 hours
       await this.cache.set(cacheKey, results, languages, limit, type, 24 * 60 * 60 * 1000);
@@ -293,7 +293,7 @@ class WikidataCacheManager {
 
   /**
    * Get data from cache
-   * @param {string} storeName - Store name (entities or properties)
+   * @param {string} storeName - Store name (entities or relations)
    * @param {string} id - Entity/Property ID
    * @returns {Promise<Object|null>} - Cached data or null
    */
@@ -316,7 +316,7 @@ class WikidataCacheManager {
 
   /**
    * Save data to cache
-   * @param {string} storeName - Store name (entities or properties)
+   * @param {string} storeName - Store name (entities or relations)
    * @param {string} id - Entity/Property ID
    * @param {Object} data - Data to cache
    * @returns {Promise<void>}
@@ -353,7 +353,7 @@ class WikidataCacheManager {
     const hasLabels = data.labels && Object.keys(data.labels).length > 0;
     const hasDescriptions = data.descriptions && Object.keys(data.descriptions).length > 0;
     
-    // For properties, we also want to check if we have claims data
+    // For relations, we also want to check if we have claims data
     const hasClaims = data.claims && Object.keys(data.claims).length > 0;
     
     return hasLabels && hasDescriptions && hasClaims;
@@ -418,8 +418,8 @@ class WikidataDataProcessor {
 }
 
 /**
- * Label Manager for Wikidata entities and properties
- * Handles loading and caching of labels for entities and properties referenced in statements
+ * Label Manager for Wikidata entities and relations
+ * Handles loading and caching of labels for entities and relations referenced in statements
  */
 class WikidataLabelManager {
   constructor(apiClient, cacheManager, dataProcessor) {
@@ -429,7 +429,7 @@ class WikidataLabelManager {
   }
 
   /**
-   * Load all labels for entities and properties referenced in statements
+   * Load all labels for entities and relations referenced in statements
    * @param {Object} claims - Claims object from Wikidata
    * @param {string} languages - Languages to fetch
    * @returns {Promise<Object>} - Object with propertyLabels and entityLabels
@@ -531,7 +531,7 @@ class WikidataLabelManager {
 
 /**
  * Wikidata Search and Disambiguation Utility
- * Provides advanced search and disambiguation functionality for entities and properties
+ * Provides advanced search and disambiguation functionality for entities and relations
  */
 class WikidataSearchUtility {
   constructor(apiClient, cacheManager, dataProcessor) {
@@ -541,24 +541,24 @@ class WikidataSearchUtility {
   }
 
   /**
-   * Search for entities and properties with exact word sequence matching
+   * Search for entities and relations with exact word sequence matching
    * @param {string} query - Exact word sequence to search for
    * @param {string} languages - Languages to search in (default: 'en')
    * @param {number} limit - Maximum number of results (default: 50)
    * @param {string} type - Type to search for: 'item', 'property', or 'both' (default: 'both')
-   * @returns {Promise<Object>} - Search results with entities and properties
+   * @returns {Promise<Object>} - Search results with entities and relations
    */
   async searchExactMatch(query, languages = 'en', limit = 50, type = 'both') {
     return await this.apiClient.searchExactMatch(query, languages, limit, type);
   }
 
   /**
-   * Search for entities and properties with fuzzy matching
+   * Search for entities and relations with fuzzy matching
    * @param {string} query - Query string to search for
    * @param {string} languages - Languages to search in (default: 'en')
    * @param {number} limit - Maximum number of results (default: 50)
    * @param {string} type - Type to search for: 'item', 'property', or 'both' (default: 'both')
-   * @returns {Promise<Object>} - Search results with entities and properties
+   * @returns {Promise<Object>} - Search results with entities and relations
    */
   async searchFuzzy(query, languages = 'en', limit = 50, type = 'both') {
     return await this.apiClient.searchFuzzy(query, languages, limit, type);
@@ -589,9 +589,9 @@ class WikidataSearchUtility {
 
       // Combine and rank results
       const exactEntities = exactResults.entities || [];
-      const exactProperties = exactResults.properties || [];
+      const exactRelations = exactResults.relations || [];
       const fuzzyEntities = fuzzyResults.entities || [];
-      const fuzzyProperties = fuzzyResults.properties || [];
+      const fuzzyRelations = fuzzyResults.relations || [];
 
       // Create a map to avoid duplicates
       const seenIds = new Set();
@@ -604,7 +604,7 @@ class WikidataSearchUtility {
         }
       });
 
-      exactProperties.forEach(property => {
+      exactRelations.forEach(property => {
         if (!seenIds.has(property.id)) {
           seenIds.add(property.id);
           results.exact.push({ ...property, matchType: 'exact' });
@@ -619,7 +619,7 @@ class WikidataSearchUtility {
         }
       });
 
-      fuzzyProperties.forEach(property => {
+      fuzzyRelations.forEach(property => {
         if (!seenIds.has(property.id)) {
           seenIds.add(property.id);
           results.fuzzy.push({ ...property, matchType: 'fuzzy' });

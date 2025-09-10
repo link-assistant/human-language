@@ -133,10 +133,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634611060,
+  "timestamp": 1757530494998,
   "ttl": 86400000,
   "query": "the capital",
   "languages": "en",

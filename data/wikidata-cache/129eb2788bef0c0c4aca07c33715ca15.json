@@ -136,10 +136,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634608798,
+  "timestamp": 1757530493593,
   "ttl": 86400000,
   "query": "fuzzy_White House",
   "languages": "en",

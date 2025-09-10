@@ -136,7 +136,7 @@
         ]
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P36",
         "title": "Property:P36",
@@ -276,7 +276,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634611813,
+  "timestamp": 1757530495385,
   "ttl": 86400000,
   "query": "fuzzy_capital",
   "languages": "en",

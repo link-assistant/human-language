@@ -133,10 +133,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634608824,
+  "timestamp": 1757530493592,
   "ttl": 86400000,
   "query": "fuzzy_White",
   "languages": "en",

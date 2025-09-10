@@ -130,7 +130,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P9097",
         "title": "Property:P9097",
@@ -270,7 +270,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634613702,
+  "timestamp": 1757530496402,
   "ttl": 86400000,
   "query": "fuzzy_America",
   "languages": "en",

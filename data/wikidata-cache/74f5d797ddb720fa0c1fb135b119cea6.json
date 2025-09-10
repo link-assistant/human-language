@@ -130,7 +130,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P6",
         "title": "Property:P6",
@@ -279,7 +279,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634612542,
+  "timestamp": 1757530495918,
   "ttl": 86400000,
   "query": "president",
   "languages": "en",

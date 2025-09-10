@@ -127,10 +127,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634618731,
+  "timestamp": 1757530500143,
   "ttl": 86400000,
   "query": "fuzzy_Romeo and Juliet",
   "languages": "en",

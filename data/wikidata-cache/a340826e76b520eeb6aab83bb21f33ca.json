@@ -1,7 +1,7 @@
 {
   "data": {
     "entities": [],
-    "properties": [
+    "relations": [
       {
         "id": "P577",
         "title": "Property:P577",
@@ -141,7 +141,7 @@
     ],
     "total": 5
   },
-  "timestamp": 1753634606378,
+  "timestamp": 1757530491963,
   "ttl": 86400000,
   "query": "was",
   "languages": "en",

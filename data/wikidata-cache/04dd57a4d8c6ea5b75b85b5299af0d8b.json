@@ -133,7 +133,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P6347",
         "title": "Property:P6347",
@@ -163,7 +163,7 @@
     ],
     "total": 6
   },
-  "timestamp": 1753634608836,
+  "timestamp": 1757530493525,
   "ttl": 86400000,
   "query": "fuzzy_the White",
   "languages": "en",

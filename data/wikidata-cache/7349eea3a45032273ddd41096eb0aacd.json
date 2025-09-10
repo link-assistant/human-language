@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634616267,
+  "timestamp": 1757530498137,
   "ttl": 86400000,
   "query": "became the President",
   "languages": "en",

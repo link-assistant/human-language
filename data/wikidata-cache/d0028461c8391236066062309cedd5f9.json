@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634619059,
+  "timestamp": 1757530500484,
   "ttl": 86400000,
   "query": "discovered relativity",
   "languages": "en",
