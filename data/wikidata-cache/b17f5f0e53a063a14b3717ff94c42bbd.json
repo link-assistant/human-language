@@ -2,6 +2,31 @@
   "data": {
     "entities": [
       {
+        "id": "Q145",
+        "title": "Q145",
+        "pageid": 281,
+        "concepturi": "http://www.wikidata.org/entity/Q145",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q145",
+        "display": {
+          "label": {
+            "value": "United Kingdom",
+            "language": "en"
+          },
+          "description": {
+            "value": "country in north-west Europe",
+            "language": "en"
+          }
+        },
+        "label": "United Kingdom",
+        "description": "country in north-west Europe",
+        "match": {
+          "type": "label",
+          "language": "en",
+          "text": "United Kingdom"
+        }
+      },
+      {
         "id": "Q637413",
         "title": "Q637413",
         "pageid": 599695,
@@ -49,31 +74,6 @@
           "type": "label",
           "language": "en",
           "text": "United States"
-        }
-      },
-      {
-        "id": "Q145",
-        "title": "Q145",
-        "pageid": 281,
-        "concepturi": "http://www.wikidata.org/entity/Q145",
-        "repository": "wikidata",
-        "url": "//www.wikidata.org/wiki/Q145",
-        "display": {
-          "label": {
-            "value": "United Kingdom",
-            "language": "en"
-          },
-          "description": {
-            "value": "country in north-west Europe",
-            "language": "en"
-          }
-        },
-        "label": "United Kingdom",
-        "description": "country in north-west Europe",
-        "match": {
-          "type": "label",
-          "language": "en",
-          "text": "United Kingdom"
         }
       },
       {
@@ -130,7 +130,7 @@
         ]
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P1225",
         "title": "Property:P1225",
@@ -228,7 +228,7 @@
         "url": "//www.wikidata.org/wiki/Property:P7063",
         "display": {
           "label": {
-            "value": "U. S. Supreme Court docket number",
+            "value": "U.S. Supreme Court docket number",
             "language": "en"
           },
           "description": {
@@ -236,7 +236,7 @@
             "language": "en"
           }
         },
-        "label": "U. S. Supreme Court docket number",
+        "label": "U.S. Supreme Court docket number",
         "description": "identifier for a case filed at the Supreme Court of the United States",
         "match": {
           "type": "alias",
@@ -276,7 +276,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634612578,
+  "timestamp": 1757530496141,
   "ttl": 86400000,
   "query": "United",
   "languages": "en",

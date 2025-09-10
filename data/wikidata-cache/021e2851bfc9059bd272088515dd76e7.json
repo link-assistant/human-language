@@ -36,7 +36,7 @@
         "display": {
           "label": {
             "value": "Barack Obama",
-            "language": "en"
+            "language": "mul"
           },
           "description": {
             "value": "president of the United States from 2009 to 2017",
@@ -47,7 +47,7 @@
         "description": "president of the United States from 2009 to 2017",
         "match": {
           "type": "alias",
-          "language": "en",
+          "language": "mul",
           "text": "Obama"
         },
         "aliases": [
@@ -133,10 +133,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753619265623,
+  "timestamp": 1757530492113,
   "ttl": 86400000,
   "query": "Obama",
   "languages": "en",

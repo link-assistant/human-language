@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634617667,
+  "timestamp": 1757530499211,
   "ttl": 86400000,
   "query": "wrote Romeo and",
   "languages": "en",

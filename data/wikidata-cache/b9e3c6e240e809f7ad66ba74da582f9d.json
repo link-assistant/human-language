@@ -130,7 +130,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P6",
         "title": "Property:P6",
@@ -279,7 +279,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634613249,
+  "timestamp": 1757530496398,
   "ttl": 86400000,
   "query": "fuzzy_president",
   "languages": "en",

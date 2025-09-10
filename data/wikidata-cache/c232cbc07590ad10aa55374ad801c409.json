@@ -27,10 +27,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 1
   },
-  "timestamp": 1753634616893,
+  "timestamp": 1757530498412,
   "ttl": 86400000,
   "query": "fuzzy_became the",
   "languages": "en",

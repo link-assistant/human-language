@@ -133,10 +133,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634612561,
+  "timestamp": 1757530495899,
   "ttl": 86400000,
   "query": "United States of America",
   "languages": "en",

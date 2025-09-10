@@ -130,10 +130,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753619279991,
+  "timestamp": 1757530494345,
   "ttl": 86400000,
   "query": "fuzzy_Einstein",
   "languages": "en",

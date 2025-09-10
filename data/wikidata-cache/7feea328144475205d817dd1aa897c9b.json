@@ -130,7 +130,7 @@
         ]
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P1225",
         "title": "Property:P1225",
@@ -199,7 +199,7 @@
         "url": "//www.wikidata.org/wiki/Property:P7063",
         "display": {
           "label": {
-            "value": "U. S. Supreme Court docket number",
+            "value": "U.S. Supreme Court docket number",
             "language": "en"
           },
           "description": {
@@ -207,7 +207,7 @@
             "language": "en"
           }
         },
-        "label": "U. S. Supreme Court docket number",
+        "label": "U.S. Supreme Court docket number",
         "description": "identifier for a case filed at the Supreme Court of the United States",
         "match": {
           "type": "alias",
@@ -276,7 +276,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634613260,
+  "timestamp": 1757530496411,
   "ttl": 86400000,
   "query": "fuzzy_United States",
   "languages": "en",

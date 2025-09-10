@@ -139,10 +139,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634616307,
+  "timestamp": 1757530498085,
   "ttl": 86400000,
   "query": "President of the",
   "languages": "en",

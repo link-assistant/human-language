@@ -27,10 +27,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 1
   },
-  "timestamp": 1753634612868,
+  "timestamp": 1757530495871,
   "ttl": 86400000,
   "query": "of America",
   "languages": "en",

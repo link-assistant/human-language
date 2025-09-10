@@ -117,10 +117,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634610228,
+  "timestamp": 1757530494582,
   "ttl": 86400000,
   "query": "fuzzy_the theory",
   "languages": "en",

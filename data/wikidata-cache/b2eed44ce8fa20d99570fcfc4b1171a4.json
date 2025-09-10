@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634614777,
+  "timestamp": 1757530497027,
   "ttl": 86400000,
   "query": "Nations Secretary",
   "languages": "en",

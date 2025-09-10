@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634619052,
+  "timestamp": 1757530500474,
   "ttl": 86400000,
   "query": "Einstein discovered relativity",
   "languages": "en",

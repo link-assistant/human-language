@@ -1,5 +1,5 @@
 // Text to Wikidata Q/P Transformer
-// Transforms English text into sequences of Wikidata entities (Q) and properties (P)
+// Transforms English text into sequences of Wikidata entities (Q) and relations (P)
 // with disambiguation support using [Q1 or Q2 or Q3] syntax
 
 // Import appropriate API based on environment
@@ -26,7 +26,7 @@ class TextToQPTransformer {
     this.apiClient = new WikidataAPIClient();
     this.searchUtility = new WikidataSearchUtility(this.apiClient, null, null);
     
-    // Common English words that should be properties
+    // Common English words that should be relations
     this.propertyIndicators = [
       'is', 'was', 'are', 'were', 'has', 'have', 'had',
       'born', 'died', 'located', 'created', 'founded',
@@ -145,7 +145,7 @@ class TextToQPTransformer {
   /**
    * Search for all n-grams in parallel
    * @param {Object} ngrams - N-grams organized by size
-   * @param {boolean} preferProperties - Whether to prefer properties
+   * @param {boolean} preferProperties - Whether to prefer relations
    * @param {number} searchLimit - Search limit
    * @returns {Promise<Array>} - Array of n-gram results with search matches
    */
@@ -240,7 +240,7 @@ class TextToQPTransformer {
   /**
    * Search for a term in Wikidata
    * @param {string} term - Term to search for
-   * @param {boolean} preferProperties - Whether to prefer properties over entities
+   * @param {boolean} preferProperties - Whether to prefer relations over entities
    * @param {number} limit - Maximum number of results
    * @returns {Promise<Object>} - Search results
    */

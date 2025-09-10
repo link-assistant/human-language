@@ -52,10 +52,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 2
   },
-  "timestamp": 1753634606686,
+  "timestamp": 1757530492202,
   "ttl": 86400000,
   "query": "in Hawaii",
   "languages": "en",

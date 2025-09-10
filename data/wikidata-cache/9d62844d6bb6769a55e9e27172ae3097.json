@@ -136,10 +136,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634610237,
+  "timestamp": 1757530494452,
   "ttl": 86400000,
   "query": "fuzzy_theory",
   "languages": "en",

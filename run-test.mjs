@@ -3,7 +3,7 @@
 // Node.js test runner for Text to Q/P Transformer
 // Run with: bun run-test.mjs
 
-import { TextToQPTransformer } from './text-to-qp-transformer.js';
+import { TextToQPTransformer } from './transformation/text-to-qp-transformer.js';
 
 /**
  * Mock Wikidata API responses for testing - Updated based on E2E findings
@@ -17,7 +17,7 @@ class MockWikidataAPIClient {
           { id: 'Q76', label: 'Barack Obama', description: 'president of the United States from 2009 to 2017' },
           { id: 'Q18643532', label: 'Barack', description: 'male given name' }
         ],
-        properties: []
+        relations: []
       },
       'Barack': {
         entities: [
@@ -25,7 +25,7 @@ class MockWikidataAPIClient {
           { id: 'Q18643532', label: 'Barack', description: 'male given name' },
           { id: 'Q37011990', label: 'Barack', description: 'family name' }
         ],
-        properties: []
+        relations: []
       },
       'Obama': {
         entities: [
@@ -33,7 +33,7 @@ class MockWikidataAPIClient {
           { id: 'Q76', label: 'Barack Obama', description: 'president of the United States from 2009 to 2017' },
           { id: 'Q41773', label: 'Obama', description: 'city in Japan' }
         ],
-        properties: []
+        relations: []
       },
       'Hawaii': {
         entities: [
@@ -41,7 +41,7 @@ class MockWikidataAPIClient {
           { id: 'Q18703903', label: 'Hawaii', description: 'volcanic island chain in the Pacific Ocean' },
           { id: 'Q68740', label: 'Hawaii', description: 'largest island of Hawaii' }
         ],
-        properties: []
+        relations: []
       },
       'born': {
         entities: [
@@ -66,13 +66,13 @@ class MockWikidataAPIClient {
           { id: 'Q937', label: 'Albert Einstein', description: 'German-born theoretical physicist' },
           { id: 'Q1309274', label: 'Einstein', description: 'municipality in Switzerland' }
         ],
-        properties: []
+        relations: []
       },
       'Albert Einstein': {
         entities: [
           { id: 'Q937', label: 'Albert Einstein', description: 'German-born theoretical physicist' }
         ],
-        properties: []
+        relations: []
       },
       'Paris': {
         entities: [
@@ -100,7 +100,7 @@ class MockWikidataAPIClient {
           { id: 'Q3080569', label: 'France', description: 'family name' },
           { id: 'Q16275867', label: 'France', description: 'commune in Lot, France' }
         ],
-        properties: []
+        relations: []
       }
     };
   }

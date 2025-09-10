@@ -52,10 +52,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 2
   },
-  "timestamp": 1753634607329,
+  "timestamp": 1757530492683,
   "ttl": 86400000,
   "query": "fuzzy_in Hawaii",
   "languages": "en",

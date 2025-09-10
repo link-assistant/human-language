@@ -23,10 +23,10 @@
         "match": {
           "type": "alias",
           "language": "en",
-          "text": "United States of America"
+          "text": "United States of North America"
         },
         "aliases": [
-          "United States of America"
+          "United States of North America"
         ]
       },
       {
@@ -139,10 +139,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634612517,
+  "timestamp": 1757530495907,
   "ttl": 86400000,
   "query": "United States of",
   "languages": "en",

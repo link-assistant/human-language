@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634606694,
+  "timestamp": 1757530492297,
   "ttl": 86400000,
   "query": "fuzzy_Obama was born",
   "languages": "en",

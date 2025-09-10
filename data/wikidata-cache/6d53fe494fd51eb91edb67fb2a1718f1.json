@@ -133,10 +133,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634611721,
+  "timestamp": 1757530495442,
   "ttl": 86400000,
   "query": "fuzzy_the capital",
   "languages": "en",

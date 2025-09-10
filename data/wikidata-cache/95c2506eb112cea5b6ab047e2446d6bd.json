@@ -92,12 +92,12 @@
             "language": "en"
           },
           "description": {
-            "value": "American automotive manufacturing corporation",
+            "value": "American multinational automotive company",
             "language": "en"
           }
         },
         "label": "General Motors",
-        "description": "American automotive manufacturing corporation",
+        "description": "American multinational automotive company",
         "match": {
           "type": "label",
           "language": "en",
@@ -133,7 +133,7 @@
         ]
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P8795",
         "title": "Property:P8795",
@@ -276,7 +276,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634615600,
+  "timestamp": 1757530497612,
   "ttl": 86400000,
   "query": "fuzzy_General",
   "languages": "en",

@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634612694,
+  "timestamp": 1757530495857,
   "ttl": 86400000,
   "query": "States of America president",
   "languages": "en",

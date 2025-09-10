@@ -1,7 +1,7 @@
 {
   "data": {
     "entities": [],
-    "properties": [
+    "relations": [
       {
         "id": "P813",
         "title": "Property:P813",
@@ -60,7 +60,7 @@
     ],
     "total": 2
   },
-  "timestamp": 1753634608146,
+  "timestamp": 1757530493198,
   "ttl": 86400000,
   "query": "fuzzy_visited",
   "languages": "en",

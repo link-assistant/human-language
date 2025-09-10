@@ -136,10 +136,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634608140,
+  "timestamp": 1757530493159,
   "ttl": 86400000,
   "query": "White House",
   "languages": "en",

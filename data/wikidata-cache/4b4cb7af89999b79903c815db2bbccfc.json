@@ -130,7 +130,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P6617",
         "title": "Property:P6617",
@@ -160,7 +160,7 @@
     ],
     "total": 6
   },
-  "timestamp": 1753634618014,
+  "timestamp": 1757530499423,
   "ttl": 86400000,
   "query": "Romeo",
   "languages": "en",

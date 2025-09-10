@@ -1,7 +1,7 @@
 {
   "data": {
     "entities": [],
-    "properties": [
+    "relations": [
       {
         "id": "P1376",
         "title": "Property:P1376",
@@ -141,7 +141,7 @@
     ],
     "total": 5
   },
-  "timestamp": 1753619280916,
+  "timestamp": 1757530495057,
   "ttl": 86400000,
   "query": "fuzzy_Paris",
   "languages": "en",

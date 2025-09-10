@@ -27,10 +27,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 1
   },
-  "timestamp": 1753634616879,
+  "timestamp": 1757530498457,
   "ttl": 86400000,
   "query": "fuzzy_of the United",
   "languages": "en",

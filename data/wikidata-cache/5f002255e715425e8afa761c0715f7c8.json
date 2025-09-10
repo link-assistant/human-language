@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634616236,
+  "timestamp": 1757530498071,
   "ttl": 86400000,
   "query": "and became",
   "languages": "en",

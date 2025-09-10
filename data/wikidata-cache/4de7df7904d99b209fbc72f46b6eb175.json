@@ -1,7 +1,7 @@
 {
   "data": {
     "entities": [],
-    "properties": [
+    "relations": [
       {
         "id": "P569",
         "title": "Property:P569",
@@ -150,7 +150,7 @@
     ],
     "total": 5
   },
-  "timestamp": 1753619292247,
+  "timestamp": 1757530491874,
   "ttl": 86400000,
   "query": "born",
   "languages": "en",

@@ -27,6 +27,34 @@
         }
       },
       {
+        "id": "Q740308",
+        "title": "Q740308",
+        "pageid": 696340,
+        "concepturi": "http://www.wikidata.org/entity/Q740308",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q740308",
+        "display": {
+          "label": {
+            "value": "UNICEF",
+            "language": "en"
+          },
+          "description": {
+            "value": "fund of United Nations",
+            "language": "en"
+          }
+        },
+        "label": "UNICEF",
+        "description": "fund of United Nations",
+        "match": {
+          "type": "alias",
+          "language": "en",
+          "text": "United Nations Children's Fund"
+        },
+        "aliases": [
+          "United Nations Children's Fund"
+        ]
+      },
+      {
         "id": "Q9259",
         "title": "Q9259",
         "pageid": 10620,
@@ -103,37 +131,9 @@
           "language": "en",
           "text": "United Nations Security Council resolution"
         }
-      },
-      {
-        "id": "Q7809",
-        "title": "Q7809",
-        "pageid": 9055,
-        "concepturi": "http://www.wikidata.org/entity/Q7809",
-        "repository": "wikidata",
-        "url": "//www.wikidata.org/wiki/Q7809",
-        "display": {
-          "label": {
-            "value": "UNESCO",
-            "language": "en"
-          },
-          "description": {
-            "value": "specialised agency of the United Nations for education, sciences, and culture",
-            "language": "en"
-          }
-        },
-        "label": "UNESCO",
-        "description": "specialised agency of the United Nations for education, sciences, and culture",
-        "match": {
-          "type": "alias",
-          "language": "en",
-          "text": "United Nations Educational, Scientific and Cultural Organization"
-        },
-        "aliases": [
-          "United Nations Educational, Scientific and Cultural Organization"
-        ]
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P1937",
         "title": "Property:P1937",
@@ -276,7 +276,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634614841,
+  "timestamp": 1757530497093,
   "ttl": 86400000,
   "query": "United Nations",
   "languages": "en",

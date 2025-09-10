@@ -77,10 +77,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 3
   },
-  "timestamp": 1753634616939,
+  "timestamp": 1757530498534,
   "ttl": 86400000,
   "query": "fuzzy_Hawaii and",
   "languages": "en",

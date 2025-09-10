@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634609202,
+  "timestamp": 1757530493794,
   "ttl": 86400000,
   "query": "Albert Einstein discovered",
   "languages": "en",

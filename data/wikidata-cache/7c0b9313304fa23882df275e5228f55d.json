@@ -136,10 +136,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634609553,
+  "timestamp": 1757530494024,
   "ttl": 86400000,
   "query": "theory",
   "languages": "en",

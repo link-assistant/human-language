@@ -11,7 +11,7 @@
         "display": {
           "label": {
             "value": "Barack Obama",
-            "language": "en"
+            "language": "mul"
           },
           "description": {
             "value": "president of the United States from 2009 to 2017",
@@ -22,7 +22,7 @@
         "description": "president of the United States from 2009 to 2017",
         "match": {
           "type": "label",
-          "language": "en",
+          "language": "mul",
           "text": "Barack Obama"
         }
       },
@@ -130,10 +130,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634607373,
+  "timestamp": 1757530492582,
   "ttl": 86400000,
   "query": "fuzzy_Barack Obama",
   "languages": "en",

@@ -234,7 +234,7 @@
 <body>
     <div class="header">
         <h1>🔍 Wikidata Search & Disambiguation Demo</h1>
-        <p>Search for entities and properties with exact matching and fuzzy search capabilities</p>
+        <p>Search for entities and relations with exact matching and fuzzy search capabilities</p>
     </div>
 
     <div class="search-container">
@@ -261,9 +261,9 @@
             <div class="option-group">
                 <label for="searchType">Search Type:</label>
                 <select id="searchType">
-                    <option value="both">Both Entities & Properties</option>
+                    <option value="both">Both Entities & Relations</option>
                     <option value="item">Entities Only</option>
-                    <option value="property">Properties Only</option>
+                    <option value="property">Relations Only</option>
                 </select>
             </div>
 
@@ -392,7 +392,7 @@
                 items = results.combined || [];
                 resultsCount.textContent = `${results.total} results (${results.exact.length} exact, ${results.fuzzy.length} fuzzy)`;
             } else {
-                items = [...(results.entities || []), ...(results.properties || [])];
+                items = [...(results.entities || []), ...(results.relations || [])];
                 resultsCount.textContent = `${items.length} results`;
             }
 
@@ -403,7 +403,7 @@
 
             const resultsHtml = items.map(item => {
                 const typeClass = item.id.startsWith('P') ? 'type-property' : 'type-entity';
-                const typeText = item.id.startsWith('P') ? 'Property' : 'Entity';
+                const typeText = item.id.startsWith('P') ? 'Relation' : 'Entity';
                 const matchClass = item.matchType === 'exact' ? 'match-exact' : 'match-fuzzy';
                 const matchText = item.matchType || '';
 

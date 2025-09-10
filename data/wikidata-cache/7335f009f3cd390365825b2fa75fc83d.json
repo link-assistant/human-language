@@ -130,10 +130,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753619272348,
+  "timestamp": 1757530493979,
   "ttl": 86400000,
   "query": "Einstein",
   "languages": "en",

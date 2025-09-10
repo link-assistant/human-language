@@ -130,7 +130,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P53",
         "title": "Property:P53",
@@ -273,7 +273,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634608192,
+  "timestamp": 1757530493169,
   "ttl": 86400000,
   "query": "House",
   "languages": "en",

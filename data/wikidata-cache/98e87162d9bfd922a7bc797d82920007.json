@@ -133,10 +133,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634613227,
+  "timestamp": 1757530496323,
   "ttl": 86400000,
   "query": "fuzzy_United States of America",
   "languages": "en",

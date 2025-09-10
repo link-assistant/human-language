@@ -127,7 +127,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P9371",
         "title": "Property:P9371",
@@ -264,7 +264,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634611129,
+  "timestamp": 1757530495033,
   "ttl": 86400000,
   "query": "France",
   "languages": "en",

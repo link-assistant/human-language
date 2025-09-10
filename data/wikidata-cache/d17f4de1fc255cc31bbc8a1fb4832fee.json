@@ -128,10 +128,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634617324,
+  "timestamp": 1757530498505,
   "ttl": 86400000,
   "query": "fuzzy_the President of",
   "languages": "en",

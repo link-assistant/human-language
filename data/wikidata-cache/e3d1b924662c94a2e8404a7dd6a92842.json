@@ -130,7 +130,7 @@
         }
       }
     ],
-    "properties": [
+    "relations": [
       {
         "id": "P9097",
         "title": "Property:P9097",
@@ -270,7 +270,7 @@
     ],
     "total": 10
   },
-  "timestamp": 1753634612579,
+  "timestamp": 1757530495919,
   "ttl": 86400000,
   "query": "America",
   "languages": "en",

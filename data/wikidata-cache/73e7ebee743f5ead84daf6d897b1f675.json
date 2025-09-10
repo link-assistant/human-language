@@ -142,10 +142,10 @@
         ]
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634616939,
+  "timestamp": 1757530498527,
   "ttl": 86400000,
   "query": "fuzzy_the United",
   "languages": "en",

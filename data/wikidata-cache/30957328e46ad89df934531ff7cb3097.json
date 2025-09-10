@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634607790,
+  "timestamp": 1757530492898,
   "ttl": 86400000,
   "query": "Obama visited",
   "languages": "en",

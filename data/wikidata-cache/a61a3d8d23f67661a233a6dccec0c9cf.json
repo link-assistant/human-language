@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634607789,
+  "timestamp": 1757530492943,
   "ttl": 86400000,
   "query": "visited the",
   "languages": "en",

@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634612646,
+  "timestamp": 1757530495925,
   "ttl": 86400000,
   "query": "of America president Barack",
   "languages": "en",

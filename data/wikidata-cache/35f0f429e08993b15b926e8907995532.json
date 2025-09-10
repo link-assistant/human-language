@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634612491,
+  "timestamp": 1757530495841,
   "ttl": 86400000,
   "query": "States of America",
   "languages": "en",

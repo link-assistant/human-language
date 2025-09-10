@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634606367,
+  "timestamp": 1757530492007,
   "ttl": 86400000,
   "query": "was born in",
   "languages": "en",

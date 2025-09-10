@@ -1,7 +1,7 @@
 {
   "data": {
     "entities": [],
-    "properties": [
+    "relations": [
       {
         "id": "P1376",
         "title": "Property:P1376",
@@ -141,7 +141,7 @@
     ],
     "total": 5
   },
-  "timestamp": 1753619280566,
+  "timestamp": 1757530494815,
   "ttl": 86400000,
   "query": "Paris",
   "languages": "en",

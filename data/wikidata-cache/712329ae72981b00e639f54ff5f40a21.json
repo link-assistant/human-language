@@ -130,10 +130,10 @@
         }
       }
     ],
-    "properties": [],
+    "relations": [],
     "total": 5
   },
-  "timestamp": 1753634617988,
+  "timestamp": 1757530499425,
   "ttl": 86400000,
   "query": "Romeo and",
   "languages": "en",

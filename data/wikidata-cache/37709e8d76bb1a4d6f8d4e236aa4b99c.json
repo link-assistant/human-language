@@ -1,10 +1,10 @@
 {
   "data": {
     "entities": [],
-    "properties": [],
+    "relations": [],
     "total": 0
   },
-  "timestamp": 1753634616888,
+  "timestamp": 1757530498420,
   "ttl": 86400000,
   "query": "fuzzy_in Hawaii and",
   "languages": "en",
