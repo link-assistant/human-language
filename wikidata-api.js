@@ -742,6 +742,360 @@ class WikidataLabelManager {
   }
 }
 
+/**
+ * Wikidata Links API
+ * Provides direct access to Wikidata relationships and links between entities
+ * Enables programmatic knowledge graph traversal and relationship queries
+ */
+class WikidataLinksAPI {
+  constructor(apiClient, cacheManager, dataProcessor) {
+    this.apiClient = apiClient;
+    this.cacheManager = cacheManager;
+    this.dataProcessor = dataProcessor;
+  }
+
+  /**
+   * Get all outgoing links from an entity
+   * @param {string} entityId - Source entity ID (e.g., 'Q42')
+   * @param {string} languages - Languages to fetch labels for
+   * @param {Object} options - Options for filtering and formatting
+   * @returns {Promise<Object>} - Object containing all outgoing links
+   */
+  async getOutgoingLinks(entityId, languages = 'en', options = {}) {
+    const {
+      includeLabels = true,
+      propertyFilter = null, // Array of property IDs to filter by
+      limit = null,
+      includeValues = true
+    } = options;
+
+    try {
+      // Fetch the entity with claims
+      const entity = await this.apiClient.fetchEntity(entityId, languages);
+      if (!entity || !entity.claims) {
+        return { entity: entityId, links: [], total: 0 };
+      }
+
+      const links = [];
+      const claims = entity.claims;
+
+      // Process each property and its claims
+      for (const [propertyId, claimsArray] of Object.entries(claims)) {
+        // Apply property filter if specified
+        if (propertyFilter && !propertyFilter.includes(propertyId)) {
+          continue;
+        }
+
+        if (!Array.isArray(claimsArray)) continue;
+
+        for (const claim of claimsArray) {
+          const link = {
+            subject: entityId,
+            property: propertyId,
+            value: null,
+            valueType: null,
+            datatype: claim.mainsnak?.datatype || 'unknown'
+          };
+
+          // Extract the value based on datatype
+          if (claim.mainsnak?.datavalue) {
+            const value = claim.mainsnak.datavalue.value;
+            
+            if (claim.mainsnak.datatype === 'wikibase-item' && value.id) {
+              link.value = value.id;
+              link.valueType = 'entity';
+            } else if (claim.mainsnak.datatype === 'time') {
+              link.value = value.time;
+              link.valueType = 'time';
+            } else if (claim.mainsnak.datatype === 'quantity') {
+              link.value = value.amount;
+              link.valueType = 'quantity';
+            } else if (claim.mainsnak.datatype === 'string') {
+              link.value = value;
+              link.valueType = 'string';
+            } else if (claim.mainsnak.datatype === 'url') {
+              link.value = value;
+              link.valueType = 'url';
+            } else if (claim.mainsnak.datatype === 'external-id') {
+              link.value = value;
+              link.valueType = 'external-id';
+            } else if (claim.mainsnak.datatype === 'commonsMedia') {
+              link.value = value;
+              link.valueType = 'media';
+            } else if (claim.mainsnak.datatype === 'geo-coordinate') {
+              link.value = `${value.latitude}, ${value.longitude}`;
+              link.valueType = 'coordinate';
+            } else if (claim.mainsnak.datatype === 'monolingualtext') {
+              link.value = value.text;
+              link.valueType = 'text';
+            } else {
+              link.value = JSON.stringify(value);
+              link.valueType = 'other';
+            }
+          }
+
+          if (includeValues || link.valueType === 'entity') {
+            links.push(link);
+          }
+        }
+      }
+
+      // Apply limit if specified
+      const finalLinks = limit ? links.slice(0, limit) : links;
+
+      // Add labels if requested
+      if (includeLabels) {
+        const allIds = new Set([entityId]);
+        finalLinks.forEach(link => {
+          allIds.add(link.property);
+          if (link.valueType === 'entity') {
+            allIds.add(link.value);
+          }
+        });
+
+        const labelsData = await this.apiClient.fetchLabels(Array.from(allIds), languages);
+        
+        // Add labels to the result
+        finalLinks.forEach(link => {
+          if (labelsData[link.property]?.labels) {
+            link.propertyLabel = this.dataProcessor.getLabel(
+              labelsData[link.property].labels, 
+              languages.split('|')[0], 
+              link.property
+            );
+          }
+          if (link.valueType === 'entity' && labelsData[link.value]?.labels) {
+            link.valueLabel = this.dataProcessor.getLabel(
+              labelsData[link.value].labels, 
+              languages.split('|')[0], 
+              link.value
+            );
+          }
+        });
+      }
+
+      return {
+        entity: entityId,
+        links: finalLinks,
+        total: finalLinks.length
+      };
+
+    } catch (error) {
+      console.error('Error getting outgoing links:', error);
+      throw new Error(`Failed to get outgoing links for ${entityId}: ${error.message}`);
+    }
+  }
+
+  /**
+   * Get entities linked to a specific entity through a specific property
+   * @param {string} entityId - Source entity ID
+   * @param {string} propertyId - Property ID to follow
+   * @param {string} languages - Languages to fetch labels for
+   * @param {Object} options - Options for filtering
+   * @returns {Promise<Array>} - Array of linked entities
+   */
+  async getLinkedEntities(entityId, propertyId, languages = 'en', options = {}) {
+    const { includeLabels = true, limit = null } = options;
+
+    const links = await this.getOutgoingLinks(entityId, languages, {
+      includeLabels,
+      propertyFilter: [propertyId],
+      limit,
+      includeValues: false // Only interested in entity links
+    });
+
+    return links.links
+      .filter(link => link.valueType === 'entity')
+      .map(link => ({
+        id: link.value,
+        label: link.valueLabel || link.value,
+        property: link.property,
+        propertyLabel: link.propertyLabel || link.property
+      }));
+  }
+
+  /**
+   * Find incoming links to an entity (reverse relationships)
+   * Note: This requires a different API approach as Wikidata doesn't provide direct reverse lookup
+   * @param {string} entityId - Target entity ID
+   * @param {string} languages - Languages to fetch labels for
+   * @param {Object} options - Options for the search
+   * @returns {Promise<Object>} - Object containing incoming links information
+   */
+  async getIncomingLinks(entityId, languages = 'en', options = {}) {
+    const { limit = 50, includeLabels = true } = options;
+
+    try {
+      // Use SPARQL-like approach through Wikidata API
+      // This is a simplified version - in practice might need SPARQL endpoint
+      const url = this.apiClient.buildApiUrl({
+        action: 'query',
+        list: 'backlinks',
+        bltitle: entityId,
+        bllimit: limit,
+        blnamespace: 0,
+        format: 'json'
+      });
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      // Note: This is a simplified implementation
+      // A complete implementation would require SPARQL queries
+      return {
+        entity: entityId,
+        incomingLinks: [],
+        total: 0,
+        note: 'Incoming links require SPARQL endpoint for full implementation'
+      };
+
+    } catch (error) {
+      console.error('Error getting incoming links:', error);
+      throw new Error(`Failed to get incoming links for ${entityId}: ${error.message}`);
+    }
+  }
+
+  /**
+   * Get all relationships between two entities
+   * @param {string} entity1Id - First entity ID
+   * @param {string} entity2Id - Second entity ID
+   * @param {string} languages - Languages to fetch labels for
+   * @returns {Promise<Object>} - Object containing relationships between entities
+   */
+  async getRelationshipsBetween(entity1Id, entity2Id, languages = 'en') {
+    try {
+      // Get outgoing links from entity1 to see if entity2 is linked
+      const entity1Links = await this.getOutgoingLinks(entity1Id, languages, {
+        includeLabels: true,
+        includeValues: false
+      });
+
+      // Get outgoing links from entity2 to see if entity1 is linked
+      const entity2Links = await this.getOutgoingLinks(entity2Id, languages, {
+        includeLabels: true,
+        includeValues: false
+      });
+
+      // Find relationships where entity1 -> entity2
+      const entity1ToEntity2 = entity1Links.links.filter(
+        link => link.valueType === 'entity' && link.value === entity2Id
+      );
+
+      // Find relationships where entity2 -> entity1
+      const entity2ToEntity1 = entity2Links.links.filter(
+        link => link.valueType === 'entity' && link.value === entity1Id
+      );
+
+      return {
+        entity1: entity1Id,
+        entity2: entity2Id,
+        entity1ToEntity2: entity1ToEntity2,
+        entity2ToEntity1: entity2ToEntity1,
+        totalRelationships: entity1ToEntity2.length + entity2ToEntity1.length,
+        bidirectional: entity1ToEntity2.length > 0 && entity2ToEntity1.length > 0
+      };
+
+    } catch (error) {
+      console.error('Error getting relationships between entities:', error);
+      throw new Error(`Failed to get relationships between ${entity1Id} and ${entity2Id}: ${error.message}`);
+    }
+  }
+
+  /**
+   * Get a knowledge graph starting from an entity with specified depth
+   * @param {string} startEntityId - Starting entity ID
+   * @param {number} depth - Maximum depth to traverse (default: 1)
+   * @param {string} languages - Languages to fetch labels for
+   * @param {Object} options - Options for graph traversal
+   * @returns {Promise<Object>} - Knowledge graph data
+   */
+  async getKnowledgeGraph(startEntityId, depth = 1, languages = 'en', options = {}) {
+    const {
+      maxNodes = 100,
+      propertyFilter = null,
+      includeLabels = true
+    } = options;
+
+    const nodes = new Map();
+    const edges = [];
+    const visited = new Set();
+    const queue = [{ id: startEntityId, currentDepth: 0 }];
+
+    try {
+      while (queue.length > 0 && nodes.size < maxNodes) {
+        const { id, currentDepth } = queue.shift();
+        
+        if (visited.has(id) || currentDepth >= depth) {
+          continue;
+        }
+
+        visited.add(id);
+
+        // Get outgoing links for current entity
+        const links = await this.getOutgoingLinks(id, languages, {
+          includeLabels,
+          propertyFilter,
+          includeValues: false
+        });
+
+        // Add current entity as node
+        if (!nodes.has(id)) {
+          nodes.set(id, {
+            id: id,
+            type: 'entity',
+            depth: currentDepth
+          });
+        }
+
+        // Process links and add connected entities
+        for (const link of links.links) {
+          if (link.valueType === 'entity') {
+            // Add edge
+            edges.push({
+              source: id,
+              target: link.value,
+              property: link.property,
+              propertyLabel: link.propertyLabel || link.property
+            });
+
+            // Add target entity to queue for next depth level
+            if (!visited.has(link.value) && currentDepth + 1 < depth) {
+              queue.push({ id: link.value, currentDepth: currentDepth + 1 });
+            }
+
+            // Add target entity as node
+            if (!nodes.has(link.value)) {
+              nodes.set(link.value, {
+                id: link.value,
+                type: 'entity',
+                depth: currentDepth + 1,
+                label: link.valueLabel || link.value
+              });
+            }
+          }
+        }
+      }
+
+      return {
+        startEntity: startEntityId,
+        nodes: Array.from(nodes.values()),
+        edges: edges,
+        totalNodes: nodes.size,
+        totalEdges: edges.length,
+        maxDepth: depth
+      };
+
+    } catch (error) {
+      console.error('Error building knowledge graph:', error);
+      throw new Error(`Failed to build knowledge graph from ${startEntityId}: ${error.message}`);
+    }
+  }
+}
+
 // Create global instances
 // Create instances with auto-detected cache type
 const apiClientInstance = new WikidataAPIClient('auto');
@@ -749,6 +1103,7 @@ const cacheManagerInstance = new WikidataCacheManager();
 const dataProcessorInstance = new WikidataDataProcessor();
 const labelManagerInstance = new WikidataLabelManager(apiClientInstance, cacheManagerInstance, dataProcessorInstance);
 const searchUtilityInstance = new WikidataSearchUtility(apiClientInstance, cacheManagerInstance, dataProcessorInstance);
+const linksApiInstance = new WikidataLinksAPI(apiClientInstance, cacheManagerInstance, dataProcessorInstance);
 
 // Export classes and instances
 export {
@@ -757,11 +1112,13 @@ export {
   WikidataDataProcessor,
   WikidataLabelManager,
   WikidataSearchUtility,
+  WikidataLinksAPI,
   apiClientInstance as client,
   cacheManagerInstance as cache,
   dataProcessorInstance as processor,
   labelManagerInstance as labelManager,
-  searchUtilityInstance as searchUtility
+  searchUtilityInstance as searchUtility,
+  linksApiInstance as linksApi
 };
 
 // Export cache factory for custom cache configuration
