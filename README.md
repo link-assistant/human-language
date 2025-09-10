@@ -58,6 +58,13 @@ This project will fundamentally transform how we store, access, and verify human
 - **Flag emojis**: Visual language indicators for better UX
 - **Language persistence**: Settings saved in localStorage
 
+### 6. International Phonetic Alphabet (IPA) Support ✨
+- **Universal pronunciation**: Display IPA transcriptions from Wikidata P898 property
+- **Multi-language phonetics**: Support for pronunciation variants across different languages
+- **Dialect support**: Includes pronunciation variety qualifiers for regional dialects
+- **Visual phonetic notation**: Beautiful IPA display with /phonemic/ notation
+- **Seamless integration**: Automatically appears when pronunciation data is available
+
 ## 📋 Roadmap
 
 Based on our [GitHub issues](https://github.com/deep-assistant/human-language/issues), here's our development roadmap:
@@ -68,9 +75,13 @@ Based on our [GitHub issues](https://github.com/deep-assistant/human-language/is
   - Update UI and API to reflect new terminology
 
 ### Phase 2: Enhanced Language Support
-- [ ] **IPA Translation Support** ([#1](https://github.com/deep-assistant/human-language/issues/1))
-  - Integrate International Phonetic Alphabet for universal pronunciation
-  - Enable true cross-linguistic unification
+- [x] **IPA Translation Support** ([#1](https://github.com/deep-assistant/human-language/issues/1)) ✨
+  - ✅ Integrated International Phonetic Alphabet retrieval from Wikidata P898 property
+  - ✅ Support for multiple language pronunciations with language qualifiers (P407)
+  - ✅ Support for pronunciation variety qualifiers (P5237) for dialects
+  - ✅ Beautiful IPA display in entity viewer with phonetic notation
+  - ✅ Comprehensive error handling and caching support
+  - ✅ Enables true cross-linguistic pronunciation unification
   
 - [ ] **Words Page Development** ([#14](https://github.com/deep-assistant/human-language/issues/14))
   - Display words in native language and IPA
@@ -143,6 +154,7 @@ Based on our [GitHub issues](https://github.com/deep-assistant/human-language/is
    - Handles all Wikidata API interactions
    - Configurable caching strategies
    - Batch request optimization
+   - IPA transcription retrieval (P898 property support)
 
 2. **Text Transformer** (`transformation/text-to-qp-transformer.js`)
    - N-gram generation and matching
