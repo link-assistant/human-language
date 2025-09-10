@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wikidata Links API Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00ff00;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        .demo-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .demo-section h2 {
+            color: #00ff00;
+            margin-top: 0;
+            border-bottom: 1px solid #00ff00;
+            padding-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #a0aec0;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 8px;
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 4px;
+            color: #e2e8f0;
+        }
+
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #00cc00;
+        }
+
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+
+        .results {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #4a5568;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .link-item {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .link-item .subject {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .link-item .property {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .link-item .value {
+            color: #4ecdc4;
+        }
+
+        .loading {
+            text-align: center;
+            color: #00ff00;
+            font-style: italic;
+        }
+
+        .error {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid #ff6b6b;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ff00;
+        }
+
+        .entity-link {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        .entity-link:hover {
+            text-decoration: underline;
+        }
+
+        .property-link {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+
+        .property-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Wikidata Links API Demo</h1>
+        
+        <!-- Outgoing Links Demo -->
+        <div class="demo-section">
+            <h2>Outgoing Links</h2>
+            <p>Get all relationships going out from an entity.</p>
+            
+            <div class="input-group">
+                <label for="entityId1">Entity ID (e.g., Q42 for Douglas Adams):</label>
+                <input type="text" id="entityId1" value="Q42" placeholder="Q42">
+            </div>
+            
+            <div class="input-group">
+                <label for="limit1">Limit (optional):</label>
+                <input type="number" id="limit1" value="10" min="1" max="50">
+            </div>
+            
+            <button onclick="getOutgoingLinks()">Get Outgoing Links</button>
+            
+            <div id="outgoingResults" class="results" style="display: none;"></div>
+        </div>
+
+        <!-- Linked Entities Demo -->
+        <div class="demo-section">
+            <h2>Linked Entities</h2>
+            <p>Get entities linked through a specific property.</p>
+            
+            <div class="input-group">
+                <label for="entityId2">Entity ID:</label>
+                <input type="text" id="entityId2" value="Q42" placeholder="Q42">
+            </div>
+            
+            <div class="input-group">
+                <label for="propertyId">Property ID:</label>
+                <select id="propertyId">
+                    <option value="P106">P106 (occupation)</option>
+                    <option value="P31">P31 (instance of)</option>
+                    <option value="P800">P800 (notable work)</option>
+                    <option value="P27">P27 (country of citizenship)</option>
+                    <option value="P19">P19 (place of birth)</option>
+                </select>
+            </div>
+            
+            <button onclick="getLinkedEntities()">Get Linked Entities</button>
+            
+            <div id="linkedResults" class="results" style="display: none;"></div>
+        </div>
+
+        <!-- Relationships Between Entities -->
+        <div class="demo-section">
+            <h2>Relationships Between Entities</h2>
+            <p>Find all relationships between two specific entities.</p>
+            
+            <div class="input-group">
+                <label for="entity1">First Entity ID:</label>
+                <input type="text" id="entity1" value="Q42" placeholder="Q42">
+            </div>
+            
+            <div class="input-group">
+                <label for="entity2">Second Entity ID:</label>
+                <input type="text" id="entity2" value="Q3107329" placeholder="Q3107329">
+            </div>
+            
+            <button onclick="getRelationshipsBetween()">Find Relationships</button>
+            
+            <div id="relationshipResults" class="results" style="display: none;"></div>
+        </div>
+
+        <!-- Knowledge Graph Demo -->
+        <div class="demo-section">
+            <h2>Knowledge Graph</h2>
+            <p>Build a knowledge graph starting from an entity.</p>
+            
+            <div class="input-group">
+                <label for="entityId3">Starting Entity ID:</label>
+                <input type="text" id="entityId3" value="Q42" placeholder="Q42">
+            </div>
+            
+            <div class="input-group">
+                <label for="depth">Depth (1-2 recommended):</label>
+                <input type="number" id="depth" value="1" min="1" max="2">
+            </div>
+            
+            <div class="input-group">
+                <label for="maxNodes">Max Nodes:</label>
+                <input type="number" id="maxNodes" value="20" min="5" max="50">
+            </div>
+            
+            <button onclick="getKnowledgeGraph()">Build Knowledge Graph</button>
+            
+            <div id="graphResults" class="results" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { linksApi } from './wikidata-api.js';
+        
+        // Make the linksApi available globally for the demo
+        window.linksApi = linksApi;
+        
+        // Utility functions
+        window.showLoading = function(elementId) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.innerHTML = '<div class="loading">Loading...</div>';
+        };
+        
+        window.showError = function(elementId, error) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+        };
+        
+        window.formatEntityLink = function(id, label) {
+            return `<a href="entities.html#${id}" class="entity-link" target="_blank">${label || id}</a>`;
+        };
+        
+        window.formatPropertyLink = function(id, label) {
+            return `<a href="properties.html#${id}" class="property-link" target="_blank">${label || id}</a>`;
+        };
+        
+        // Demo functions
+        window.getOutgoingLinks = async function() {
+            const entityId = document.getElementById('entityId1').value.trim();
+            const limit = parseInt(document.getElementById('limit1').value) || 10;
+            
+            if (!entityId) return;
+            
+            showLoading('outgoingResults');
+            
+            try {
+                const result = await linksApi.getOutgoingLinks(entityId, 'en', { 
+                    limit: limit,
+                    includeLabels: true 
+                });
+                
+                let html = `
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">${result.total}</div>
+                            <div>Total Links</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${result.links.length}</div>
+                            <div>Displayed</div>
+                        </div>
+                    </div>
+                `;
+                
+                result.links.forEach(link => {
+                    html += `
+                        <div class="link-item">
+                            <div>
+                                <span class="subject">${formatEntityLink(link.subject, entityId)}</span>
+                                →
+                                <span class="property">${formatPropertyLink(link.property, link.propertyLabel)}</span>
+                                →
+                                <span class="value">
+                                    ${link.valueType === 'entity' ? 
+                                        formatEntityLink(link.value, link.valueLabel) : 
+                                        link.value}
+                                </span>
+                            </div>
+                            <div style="font-size: 0.9em; color: #a0aec0; margin-top: 5px;">
+                                Type: ${link.valueType} | Datatype: ${link.datatype}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                document.getElementById('outgoingResults').innerHTML = html;
+                document.getElementById('outgoingResults').style.display = 'block';
+                
+            } catch (error) {
+                showError('outgoingResults', error);
+            }
+        };
+        
+        window.getLinkedEntities = async function() {
+            const entityId = document.getElementById('entityId2').value.trim();
+            const propertyId = document.getElementById('propertyId').value;
+            
+            if (!entityId) return;
+            
+            showLoading('linkedResults');
+            
+            try {
+                const result = await linksApi.getLinkedEntities(entityId, propertyId, 'en');
+                
+                let html = `
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">${result.length}</div>
+                            <div>Linked Entities</div>
+                        </div>
+                    </div>
+                `;
+                
+                if (result.length === 0) {
+                    html += '<div>No linked entities found for this property.</div>';
+                } else {
+                    result.forEach(entity => {
+                        html += `
+                            <div class="link-item">
+                                <div>
+                                    ${formatEntityLink(entity.id, entity.label)}
+                                </div>
+                                <div style="font-size: 0.9em; color: #a0aec0; margin-top: 5px;">
+                                    via ${formatPropertyLink(entity.property, entity.propertyLabel)}
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                document.getElementById('linkedResults').innerHTML = html;
+                document.getElementById('linkedResults').style.display = 'block';
+                
+            } catch (error) {
+                showError('linkedResults', error);
+            }
+        };
+        
+        window.getRelationshipsBetween = async function() {
+            const entity1 = document.getElementById('entity1').value.trim();
+            const entity2 = document.getElementById('entity2').value.trim();
+            
+            if (!entity1 || !entity2) return;
+            
+            showLoading('relationshipResults');
+            
+            try {
+                const result = await linksApi.getRelationshipsBetween(entity1, entity2, 'en');
+                
+                let html = `
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">${result.totalRelationships}</div>
+                            <div>Total Relationships</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${result.bidirectional ? 'Yes' : 'No'}</div>
+                            <div>Bidirectional</div>
+                        </div>
+                    </div>
+                `;
+                
+                if (result.entity1ToEntity2.length > 0) {
+                    html += '<h3>Entity 1 → Entity 2:</h3>';
+                    result.entity1ToEntity2.forEach(rel => {
+                        html += `
+                            <div class="link-item">
+                                <span class="subject">${formatEntityLink(rel.subject, entity1)}</span>
+                                →
+                                <span class="property">${formatPropertyLink(rel.property, rel.propertyLabel)}</span>
+                                →
+                                <span class="value">${formatEntityLink(rel.value, entity2)}</span>
+                            </div>
+                        `;
+                    });
+                }
+                
+                if (result.entity2ToEntity1.length > 0) {
+                    html += '<h3>Entity 2 → Entity 1:</h3>';
+                    result.entity2ToEntity1.forEach(rel => {
+                        html += `
+                            <div class="link-item">
+                                <span class="subject">${formatEntityLink(rel.subject, entity2)}</span>
+                                →
+                                <span class="property">${formatPropertyLink(rel.property, rel.propertyLabel)}</span>
+                                →
+                                <span class="value">${formatEntityLink(rel.value, entity1)}</span>
+                            </div>
+                        `;
+                    });
+                }
+                
+                if (result.totalRelationships === 0) {
+                    html += '<div>No direct relationships found between these entities.</div>';
+                }
+                
+                document.getElementById('relationshipResults').innerHTML = html;
+                document.getElementById('relationshipResults').style.display = 'block';
+                
+            } catch (error) {
+                showError('relationshipResults', error);
+            }
+        };
+        
+        window.getKnowledgeGraph = async function() {
+            const entityId = document.getElementById('entityId3').value.trim();
+            const depth = parseInt(document.getElementById('depth').value) || 1;
+            const maxNodes = parseInt(document.getElementById('maxNodes').value) || 20;
+            
+            if (!entityId) return;
+            
+            showLoading('graphResults');
+            
+            try {
+                const result = await linksApi.getKnowledgeGraph(entityId, depth, 'en', { 
+                    maxNodes: maxNodes,
+                    includeLabels: true 
+                });
+                
+                let html = `
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">${result.totalNodes}</div>
+                            <div>Nodes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${result.totalEdges}</div>
+                            <div>Edges</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${result.maxDepth}</div>
+                            <div>Max Depth</div>
+                        </div>
+                    </div>
+                `;
+                
+                html += '<h3>Nodes:</h3>';
+                result.nodes.forEach(node => {
+                    html += `
+                        <div class="link-item">
+                            <div>
+                                ${formatEntityLink(node.id, node.label)} 
+                                <span style="color: #a0aec0;">(depth: ${node.depth})</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '<h3>Edges:</h3>';
+                result.edges.forEach(edge => {
+                    html += `
+                        <div class="link-item">
+                            <span class="subject">${formatEntityLink(edge.source, edge.source)}</span>
+                            →
+                            <span class="property">${formatPropertyLink(edge.property, edge.propertyLabel)}</span>
+                            →
+                            <span class="value">${formatEntityLink(edge.target, edge.target)}</span>
+                        </div>
+                    `;
+                });
+                
+                document.getElementById('graphResults').innerHTML = html;
+                document.getElementById('graphResults').style.display = 'block';
+                
+            } catch (error) {
+                showError('graphResults', error);
+            }
+        };
+    </script>
+</body>
+</html>
