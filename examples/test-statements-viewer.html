@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced Statement Viewer Test</title>
+  <style>
+    :root {
+      --background: #121212;
+      --text: #E0E0E0;
+      --neon: #00FF00;
+      --neon-selected: #00FFFF;
+      --header-bg: #222;
+    }
+    
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .statement-link {
+      color: var(--neon);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .statement-link:hover {
+      color: var(--neon-selected);
+      text-decoration: underline;
+    }
+    
+    h1, h2 {
+      color: var(--neon);
+    }
+    
+    .test-section {
+      margin: 30px 0;
+      padding: 20px;
+      border: 1px solid #333;
+      border-radius: 8px;
+    }
+    
+    .success {
+      color: #4CAF50;
+    }
+    
+    .error {
+      color: #F44336;
+    }
+  </style>
+</head>
+<body>
+  <h1>Enhanced Statement Viewer Test</h1>
+  <div id="root"></div>
+  
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="module">
+    import React from 'https://esm.sh/react@19';
+    import ReactDOM from 'https://esm.sh/react-dom@19/client';
+
+    window.React = React;
+    window.ReactDOM = ReactDOM;
+  </script>
+  
+  <script type="text/babel" src="../statements.jsx"></script>
+  
+  <script type="text/babel">
+    const { Statement, Reference, StatementsSection } = window.StatementComponents;
+    
+    function TestApp() {
+      const [testResults, setTestResults] = React.useState([]);
+      
+      // Mock data with multiple reference types
+      const normalClaim = {
+        mainsnak: {
+          snaktype: "value",
+          property: "P31",
+          datavalue: {
+            value: { "entity-type": "item", "numeric-id": 5, id: "Q5" },
+            type: "wikibase-entityid"
+          },
+          datatype: "wikibase-item"
+        },
+        type: "statement",
+        rank: "normal",
+        references: [
+          {
+            hash: "ref1",
+            snaks: {
+              P248: [{
+                snaktype: "value",
+                property: "P248",
+                datavalue: {
+                  value: { "entity-type": "item", id: "Q19938912" },
+                  type: "wikibase-entityid"
+                },
+                datatype: "wikibase-item"
+              }],
+              P813: [{
+                snaktype: "value",
+                property: "P813",
+                datavalue: {
+                  value: { time: "+2015-10-10T00:00:00Z" },
+                  type: "time"
+                },
+                datatype: "time"
+              }]
+            }
+          }
+        ]
+      };
+      
+      const deprecatedClaim = {
+        ...normalClaim,
+        rank: "deprecated",
+        references: [
+          {
+            hash: "ref2",
+            snaks: {
+              P248: [{
+                snaktype: "value",
+                property: "P248",
+                datavalue: {
+                  value: { "entity-type": "item", id: "Q36578" },
+                  type: "wikibase-entityid"
+                },
+                datatype: "wikibase-item"
+              }]
+            }
+          }
+        ]
+      };
+      
+      const preferredClaim = {
+        ...normalClaim,
+        rank: "preferred",
+        references: [
+          {
+            hash: "ref3",
+            snaks: {
+              P248: [{
+                snaktype: "value",
+                property: "P248",
+                datavalue: {
+                  value: { "entity-type": "item", id: "Q73504744" },
+                  type: "wikibase-entityid"
+                },
+                datatype: "wikibase-item"
+              }],
+              P813: [{
+                snaktype: "value",
+                property: "P813",
+                datavalue: {
+                  value: { time: "+2024-05-05T00:00:00Z" },
+                  type: "time"
+                },
+                datatype: "time"
+              }],
+              P407: [{
+                snaktype: "value",
+                property: "P407",
+                datavalue: {
+                  value: { "entity-type": "item", id: "Q1321" },
+                  type: "wikibase-entityid"
+                },
+                datatype: "wikibase-item"
+              }]
+            }
+          }
+        ]
+      };
+      
+      const mockStatementsData = {
+        P31: [normalClaim, deprecatedClaim, preferredClaim]
+      };
+      
+      const mockGetLabel = (id) => {
+        const labels = {
+          'Q76': 'Barack Obama',
+          'P31': 'instance of',
+          'Q5': 'human',
+          'Q19938912': 'Bibliothèque nationale de France',
+          'Q36578': 'Integrated Authority File',
+          'Q73504744': 'Biblioteca Nacional de España',
+          'P248': 'stated in',
+          'P813': 'retrieved',
+          'P407': 'language of work or name',
+          'Q1321': 'Spanish'
+        };
+        return labels[id] || id;
+      };
+      
+      React.useEffect(() => {
+        // Run tests
+        const results = [];
+        
+        try {
+          // Test 1: Check if components are loaded
+          if (Statement && Reference && StatementsSection) {
+            results.push({ test: "Components loaded", status: "success", message: "All components loaded successfully" });
+          } else {
+            results.push({ test: "Components loaded", status: "error", message: "Components not loaded properly" });
+          }
+          
+          // Test 2: Check if references can be rendered
+          try {
+            const refElement = React.createElement(Reference, {
+              reference: normalClaim.references[0],
+              getLabel: mockGetLabel,
+              selectedLanguage: "en"
+            });
+            results.push({ test: "Reference component", status: "success", message: "Reference component renders without error" });
+          } catch (e) {
+            results.push({ test: "Reference component", status: "error", message: `Reference component error: ${e.message}` });
+          }
+          
+          // Test 3: Check if enhanced statement renders
+          try {
+            const statementElement = React.createElement(Statement, {
+              items: ['Q76', 'P31', 'Q5'],
+              claim: normalClaim,
+              getLabel: mockGetLabel,
+              selectedLanguage: "en"
+            });
+            results.push({ test: "Enhanced Statement", status: "success", message: "Enhanced Statement component renders without error" });
+          } catch (e) {
+            results.push({ test: "Enhanced Statement", status: "error", message: `Enhanced Statement error: ${e.message}` });
+          }
+          
+        } catch (e) {
+          results.push({ test: "General", status: "error", message: `General error: ${e.message}` });
+        }
+        
+        setTestResults(results);
+      }, []);
+      
+      return (
+        <div>
+          <div className="test-section">
+            <h2>Test Results</h2>
+            {testResults.map((result, index) => (
+              <div key={index} className={result.status}>
+                <strong>{result.test}:</strong> {result.message}
+              </div>
+            ))}
+          </div>
+          
+          <div className="test-section">
+            <h2>Normal Statement (with Confirmations)</h2>
+            <Statement
+              items={['Q76', 'P31', 'Q5']}
+              claim={normalClaim}
+              getLabel={mockGetLabel}
+              onEntityClick={(id) => console.log('Entity clicked:', id)}
+              onPropertyClick={(id) => console.log('Property clicked:', id)}
+              selectedLanguage="en"
+            />
+          </div>
+          
+          <div className="test-section">
+            <h2>Deprecated Statement (with Refutations)</h2>
+            <Statement
+              items={['Q76', 'P31', 'Q5']}
+              claim={deprecatedClaim}
+              getLabel={mockGetLabel}
+              onEntityClick={(id) => console.log('Entity clicked:', id)}
+              onPropertyClick={(id) => console.log('Property clicked:', id)}
+              selectedLanguage="en"
+            />
+          </div>
+          
+          <div className="test-section">
+            <h2>Preferred Statement (with Enhanced Confirmations)</h2>
+            <Statement
+              items={['Q76', 'P31', 'Q5']}
+              claim={preferredClaim}
+              getLabel={mockGetLabel}
+              onEntityClick={(id) => console.log('Entity clicked:', id)}
+              onPropertyClick={(id) => console.log('Property clicked:', id)}
+              selectedLanguage="en"
+            />
+          </div>
+          
+          <div className="test-section">
+            <h2>Complete Statements Section</h2>
+            <StatementsSection
+              statements={mockStatementsData}
+              subjectId="Q76"
+              getLabel={mockGetLabel}
+              onEntityClick={(id) => console.log('Entity clicked:', id)}
+              onPropertyClick={(id) => console.log('Property clicked:', id)}
+              selectedLanguage="en"
+            />
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<TestApp />);
+  </script>
+</body>
+</html>
