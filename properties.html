@@ -246,6 +246,8 @@
       const [propertyId, setPropertyId] = React.useState(window.location.hash.slice(1) || 'P31');
       const [labels, setLabels] = React.useState({});
       const [descriptions, setDescriptions] = React.useState({});
+      const [aliases, setAliases] = React.useState({});
+      const [selectedLabelIndex, setSelectedLabelIndex] = React.useState(0);
       const [preferredLanguages, setPreferredLanguages] = React.useState([]);
       const [availableLanguages, setAvailableLanguages] = React.useState([]);
       const [selectedLanguage, setSelectedLanguage] = React.useState('');
@@ -314,6 +316,7 @@
               
               setLabels(property.labels || {});
               setDescriptions(property.descriptions || {});
+              setAliases(property.aliases || {});
               setStatements(property.claims || {});
               console.log('Property claims loaded:', property.claims);
               const langSet = new Set([...Object.keys(property.labels || {}), ...Object.keys(property.descriptions || {})]);
@@ -330,6 +333,7 @@
             } else {
               setLabels({});
               setDescriptions({});
+              setAliases({});
               setStatements({});
               setAvailableLanguages([]);
               const savedLanguage = loadFromLocalStorage(STORAGE_KEYS.LANGUAGE, null);
@@ -346,6 +350,7 @@
             console.error('Error fetching data:', error);
             setLabels({});
             setDescriptions({});
+            setAliases({});
             setStatements({});
             setAvailableLanguages([]);
             const savedLanguage = loadFromLocalStorage(STORAGE_KEYS.LANGUAGE, null);
@@ -353,6 +358,11 @@
             setIsLoading(false);
           });
       }, [propertyId]);
+
+      // Reset label index when language changes
+      React.useEffect(() => {
+        setSelectedLabelIndex(0);
+      }, [selectedLanguage]);
 
       const toggleTheme = () => {
         setTheme(prevTheme => {
@@ -369,7 +379,19 @@
       const { StatementsSection } = window.StatementComponents;
       const { LoadingComponent } = window.LoadingComponents;
 
-      const currentLabel = labels[selectedLanguage]?.value || 'No label available';
+      // Create list of available labels (main label + aliases) for current language
+      const availableLabels = [];
+      const mainLabel = labels[selectedLanguage]?.value;
+      if (mainLabel) {
+        availableLabels.push({ type: 'main', value: mainLabel, display: mainLabel });
+      }
+      
+      const currentAliases = aliases[selectedLanguage] || [];
+      currentAliases.forEach((alias, index) => {
+        availableLabels.push({ type: 'alias', value: alias.value, display: `${alias.value} (alias)` });
+      });
+      
+      const currentLabel = availableLabels[selectedLabelIndex]?.value || mainLabel || 'No label available';
       const otherLabels = preferredLanguages.filter(lang => lang !== selectedLanguage && labels[lang]);
       const sortedLanguages = [selectedLanguage, ...otherLabels];
       const descriptionsList = sortedLanguages.map(lang => descriptions[lang]?.value).filter(desc => desc);
@@ -385,7 +407,30 @@
             {theme === 'dark' ? '☀️' : '🌙'}
           </button>
           <main>
-            <h1>{currentLabel}</h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '30px' }}>
+              <h1 style={{ margin: '0' }}>{currentLabel}</h1>
+              {availableLabels.length > 1 && (
+                <select 
+                  value={selectedLabelIndex}
+                  onChange={(e) => setSelectedLabelIndex(parseInt(e.target.value))}
+                  style={{
+                    backgroundColor: 'var(--header-bg)',
+                    color: 'var(--text)',
+                    border: '1px solid var(--neon)',
+                    borderRadius: '4px',
+                    padding: '8px',
+                    fontSize: '1rem',
+                    fontFamily: 'Orbitron, sans-serif'
+                  }}
+                >
+                  {availableLabels.map((label, index) => (
+                    <option key={index} value={index}>
+                      {label.display}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
             {otherLabels.map(lang => (
               <h2 key={lang}>{labels[lang]?.value || 'No label available'}</h2>
             ))}

@@ -52,7 +52,7 @@ class WikidataAPIClient {
   /**
    * Fetch entities from Wikidata API
    * @param {string|Array} ids - Entity IDs to fetch
-   * @param {string} props - Properties to fetch (labels|descriptions|claims)
+   * @param {string} props - Properties to fetch (labels|descriptions|claims|aliases)
    * @param {string} languages - Languages to fetch
    * @returns {Promise<Object>} - API response
    */
@@ -80,7 +80,7 @@ class WikidataAPIClient {
    * @returns {Promise<Object>} - Entity data
    */
   async fetchEntity(entityId, languages = 'en') {
-    const data = await this.fetchEntities(entityId, 'labels|descriptions|claims', languages);
+    const data = await this.fetchEntities(entityId, 'labels|descriptions|claims|aliases', languages);
     return data.entities[entityId];
   }
 
@@ -102,7 +102,7 @@ class WikidataAPIClient {
    * @returns {Promise<Object>} - Property data
    */
   async fetchProperty(propertyId, languages = 'en') {
-    const data = await this.fetchEntities(propertyId, 'labels|descriptions|claims', languages);
+    const data = await this.fetchEntities(propertyId, 'labels|descriptions|claims|aliases', languages);
     return data.entities[propertyId];
   }
 
