@@ -266,6 +266,7 @@
       });
       const [propertyLabels, setPropertyLabels] = React.useState({});
       const [entityLabels, setEntityLabels] = React.useState({});
+      const [ipaTranscriptions, setIpaTranscriptions] = React.useState([]);
 
       React.useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -294,6 +295,7 @@
           setLabels({});
           setDescriptions({});
           setAvailableLanguages([]);
+          setIpaTranscriptions([]);
         };
         window.addEventListener('hashchange', handleHashChange);
         return () => window.removeEventListener('hashchange', handleHashChange);
@@ -354,12 +356,22 @@
               const { propertyLabels: newPropertyLabels, entityLabels: newEntityLabels } = await labelManager.loadAllLabels(entityData.claims, languages);
               setPropertyLabels(newPropertyLabels);
               setEntityLabels(newEntityLabels);
+
+              // Load IPA transcriptions
+              try {
+                const ipa = await apiClient.getIpaTranscription(entityId, languages);
+                setIpaTranscriptions(ipa);
+              } catch (ipaError) {
+                console.error('Error fetching IPA transcriptions:', ipaError);
+                setIpaTranscriptions([]);
+              }
             } else {
               console.log('No entity data found for:', entityId);
               setLabels({});
               setDescriptions({});
               setStatements({});
               setAvailableLanguages([]);
+              setIpaTranscriptions([]);
               const savedLanguage = loadFromLocalStorage(STORAGE_KEYS.LANGUAGE, null);
               setSelectedLanguage(savedLanguage || uniquePreferredLangs[0] || 'en');
             }
@@ -371,6 +383,7 @@
             setDescriptions({});
             setStatements({});
             setAvailableLanguages([]);
+            setIpaTranscriptions([]);
             const savedLanguage = loadFromLocalStorage(STORAGE_KEYS.LANGUAGE, null);
             setSelectedLanguage(savedLanguage || uniquePreferredLangs[0] || 'en');
             setIsLoading(false);
@@ -415,6 +428,53 @@
               ))
             ) : (
               <p>No description available</p>
+            )}
+
+            {/* IPA Transcriptions Section */}
+            {ipaTranscriptions.length > 0 && (
+              <div style={{
+                margin: '30px 0',
+                padding: '20px',
+                border: '2px solid var(--neon)',
+                borderRadius: '8px',
+                backgroundColor: 'rgba(0, 255, 0, 0.05)'
+              }}>
+                <h3 style={{ 
+                  color: 'var(--neon)', 
+                  fontSize: '1.2rem', 
+                  marginBottom: '15px',
+                  textShadow: '0 0 5px var(--neon)'
+                }}>
+                  🗣️ IPA Pronunciation
+                </h3>
+                {ipaTranscriptions.map((ipa, index) => (
+                  <div key={index} style={{
+                    marginBottom: '10px',
+                    fontSize: '1.1rem',
+                    fontFamily: 'monospace'
+                  }}>
+                    <span style={{ 
+                      color: 'var(--neon)',
+                      fontWeight: 'bold',
+                      fontSize: '1.3rem'
+                    }}>
+                      /{ipa.value}/
+                    </span>
+                    {(ipa.language || ipa.variety) && (
+                      <span style={{ 
+                        marginLeft: '10px',
+                        fontSize: '0.9rem',
+                        color: 'var(--description-text)',
+                        fontStyle: 'italic'
+                      }}>
+                        {ipa.language && `(${getLabel(ipa.language)})`}
+                        {ipa.variety && ipa.language && ' '}
+                        {ipa.variety && `[${getLabel(ipa.variety)}]`}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
             )}
             
             <StatementsSection
