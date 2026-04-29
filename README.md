@@ -2,6 +2,23 @@
 
 > A sophisticated web application for transforming natural language into Wikidata entity and property sequences, enabling semantic understanding and knowledge representation.
 
+🌐 **Live site:** <https://link-assistant.github.io/human-language/>
+
+## 🎬 Demos
+
+Every demo is published to GitHub Pages and reachable from the [main page](https://link-assistant.github.io/human-language/).
+
+| Demo | Description | Source |
+| ---- | ----------- | ------ |
+| [Text → Q/P Transformer](https://link-assistant.github.io/human-language/transformation/index.html) | Turn English text into a sequence of Wikidata entities (Q) and properties (P), with n-gram support. | [`transformation/index.html`](transformation/index.html) |
+| [N-gram Transformer Test](https://link-assistant.github.io/human-language/transformation/test-ngram.html) | Compare transformer results across n-gram sizes 1–5. | [`transformation/test-ngram.html`](transformation/test-ngram.html) |
+| [Entity Viewer](https://link-assistant.github.io/human-language/entities.html) | Browse any Wikidata entity (Q-id) with a theme-aware, multilingual UI. | [`entities.html`](entities.html) |
+| [Property Viewer](https://link-assistant.github.io/human-language/properties.html) | Inspect any Wikidata property (P-id), with usage examples and related entities. | [`properties.html`](properties.html) |
+| [Search & Disambiguation](https://link-assistant.github.io/human-language/search-demo.html) | Exact and fuzzy Wikidata search with context-aware ranking. | [`search-demo.html`](search-demo.html) |
+| [Caching Demo](https://link-assistant.github.io/human-language/cache-demo.html) | Visualize the unified cache layer (file-system + IndexedDB) in action. | [`cache-demo.html`](cache-demo.html) |
+| [Browser Cache Test](https://link-assistant.github.io/human-language/browser-cache-test.html) | Stress-test the IndexedDB-backed browser cache. | [`browser-cache-test.html`](browser-cache-test.html) |
+| [Test Runner (browser)](https://link-assistant.github.io/human-language/run-tests.html) | Run the automated test suites in the browser, no toolchain required. | [`run-tests.html`](run-tests.html) |
+
 ## 🎯 Vision
 
 The Human Language project aims to create a universal meta-language that bridges all human languages by leveraging Wikidata's semantic knowledge graph. By converting natural language into sequences of entities (Q) and properties (P), we enable:
@@ -60,38 +77,38 @@ This project will fundamentally transform how we store, access, and verify human
 
 ## 📋 Roadmap
 
-Based on our [GitHub issues](https://github.com/deep-assistant/human-language/issues), here's our development roadmap:
+Based on our [GitHub issues](https://github.com/link-assistant/human-language/issues), here's our development roadmap:
 
 ### Phase 1: Core Infrastructure Enhancement
-- [ ] **Rename properties to relations/links** ([#12](https://github.com/deep-assistant/human-language/issues/12))
+- [ ] **Rename properties to relations/links** ([#12](https://github.com/link-assistant/human-language/issues/12))
   - Better semantic clarity for relationships between entities
   - Update UI and API to reflect new terminology
 
 ### Phase 2: Enhanced Language Support
-- [ ] **IPA Translation Support** ([#1](https://github.com/deep-assistant/human-language/issues/1))
+- [ ] **IPA Translation Support** ([#1](https://github.com/link-assistant/human-language/issues/1))
   - Integrate International Phonetic Alphabet for universal pronunciation
   - Enable true cross-linguistic unification
   
-- [ ] **Words Page Development** ([#14](https://github.com/deep-assistant/human-language/issues/14))
+- [ ] **Words Page Development** ([#14](https://github.com/link-assistant/human-language/issues/14))
   - Display words in native language and IPA
   - List all entities a word can represent
-  - Support alternative names/words for entities ([#10](https://github.com/deep-assistant/human-language/issues/10))
+  - Support alternative names/words for entities ([#10](https://github.com/link-assistant/human-language/issues/10))
 
 ### Phase 3: Advanced Features
-- [ ] **Automatic Description Conversion** ([#11](https://github.com/deep-assistant/human-language/issues/11))
+- [ ] **Automatic Description Conversion** ([#11](https://github.com/link-assistant/human-language/issues/11))
   - Convert natural language descriptions into Q/P sequences
   - Enable semantic analysis of any text
   
-- [ ] **Statements Viewer** ([#3](https://github.com/deep-assistant/human-language/issues/3))
+- [ ] **Statements Viewer** ([#3](https://github.com/link-assistant/human-language/issues/3))
   - Display confirmations and refutations for each statement
   - Build trust through community validation
 
 ### Phase 4: External Integration
-- [ ] **Wikidata Links API Access** ([#15](https://github.com/deep-assistant/human-language/issues/15))
+- [ ] **Wikidata Links API Access** ([#15](https://github.com/link-assistant/human-language/issues/15))
   - Direct API-style access to Wikidata relationships
   - Enable programmatic knowledge graph traversal
   
-- [ ] **Formal Ontology Integration** ([#17](https://github.com/deep-assistant/human-language/issues/17))
+- [ ] **Formal Ontology Integration** ([#17](https://github.com/link-assistant/human-language/issues/17))
   - Research and integrate best formal upper ontology
   - Enhance semantic reasoning capabilities
 
@@ -221,11 +238,17 @@ bun limitation-test.mjs
 ```
 
 ### Interactive Demos
-- **Entity Viewer**: Open `entities.html`
-- **Property Viewer**: Open `properties.html`  
-- **Text Transformer**: Open `transformation/index.html`
-- **Search Demo**: Open `search-demo.html`
-- **Browser Tests**: Open `run-tests.html`
+
+See the [🎬 Demos](#-demos) section above for the full table — every demo is hosted at `https://link-assistant.github.io/human-language/<file>`.
+
+- **Entity Viewer** — [`entities.html`](https://link-assistant.github.io/human-language/entities.html)
+- **Property Viewer** — [`properties.html`](https://link-assistant.github.io/human-language/properties.html)
+- **Text Transformer** — [`transformation/index.html`](https://link-assistant.github.io/human-language/transformation/index.html)
+- **N-gram Test** — [`transformation/test-ngram.html`](https://link-assistant.github.io/human-language/transformation/test-ngram.html)
+- **Search Demo** — [`search-demo.html`](https://link-assistant.github.io/human-language/search-demo.html)
+- **Caching Demo** — [`cache-demo.html`](https://link-assistant.github.io/human-language/cache-demo.html)
+- **Browser Cache Test** — [`browser-cache-test.html`](https://link-assistant.github.io/human-language/browser-cache-test.html)
+- **Browser Test Runner** — [`run-tests.html`](https://link-assistant.github.io/human-language/run-tests.html)
 
 ## ⚠️ Known Limitations
 
@@ -258,7 +281,7 @@ Test results are stored in `api-patterns.json` showing real-world transformation
 
 ## 🤝 Contributing
 
-We welcome contributions! Check our [issues](https://github.com/deep-assistant/human-language/issues) for areas where you can help.
+We welcome contributions! Check our [issues](https://github.com/link-assistant/human-language/issues) for areas where you can help.
 
 ## 📄 License
 

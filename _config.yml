@@ -1,0 +1,28 @@
+title: Human Language Project
+description: A new kind of language for all people on earth
+url: https://link-assistant.github.io
+baseurl: /human-language
+repository: link-assistant/human-language
+github:
+  repository_url: https://github.com/link-assistant/human-language
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-seo-tag
+
+# Files at repo root that aren't site content.
+exclude:
+  - node_modules
+  - data
+  - api-patterns.json
+  - limitations-found.json
+  - "*.mjs"
+  - "*.jsx"
+  - settings.js
+  - persistent-cache.js
+  - search-test.js
+  - unified-cache.js
+  - unified-cache-browser.js
+  - unified-cache-test.mjs
+  - wikidata-api.js
+  - wikidata-api-browser.js
+  - .gitkeep
