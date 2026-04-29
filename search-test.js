@@ -1,7 +1,10 @@
 // Test file for Wikidata search functionality
 // Tests the search and disambiguation features
 
-import { searchUtility, client } from './wikidata-api.js';
+// In the browser this loads the IndexedDB-backed implementation; under
+// Node the *-browser entry point still works because it only depends on
+// fetch + an in-memory fallback when IndexedDB is unavailable.
+import { searchUtility, client } from './wikidata-api-browser.js';
 
 /**
  * Test suite for Wikidata search functionality
