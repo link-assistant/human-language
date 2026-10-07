@@ -1,13 +1,8 @@
 #!/usr/bin/env node
-// Detects whether package.json's version changed in the current commit
-// relative to its parent. Writes `should_publish=…` and `version=…` to
-// $GITHUB_OUTPUT so the release workflow can gate `npm publish` on a
-// real version bump.
-//
-// Honours $FORCE_PUBLISH=true (set by workflow_dispatch) to skip the diff.
-//
-// Exit status is always 0 — a missing previous version is treated as
-// "no publish needed" rather than a CI failure.
+// Detect package.json version changes across the pre-push SHA or parent.
+// GITHUB_OUTPUT receives should_publish and version for the release jobs.
+// FORCE_PUBLISH=true retries a failed release without another version bump.
+// A missing previous manifest triggers the first publication.
 
 import { spawnSync } from 'node:child_process';
 import { readFileSync, appendFileSync } from 'node:fs';
@@ -19,7 +14,7 @@ function readCurrentVersion() {
 }
 
 function readPreviousVersion() {
-  const result = spawnSync('git', ['show', 'HEAD~1:package.json'], { encoding: 'utf8' });
+  const result = spawnSync('git', ['show', `${process.env.PREVIOUS_SHA || 'HEAD~1'}:package.json`], { encoding: 'utf8' });
   if (result.status !== 0) return null;
   try {
     return JSON.parse(result.stdout).version || null;
@@ -49,8 +44,8 @@ if (previous && previous !== current) {
   console.log(`npm package version: ${previous} -> ${current}; publishing.`);
   setOutput('should_publish', 'true');
 } else if (!previous) {
-  console.log(`npm package version: ${current} (no previous package.json); skipping publish.`);
-  setOutput('should_publish', 'false');
+  console.log(`npm package version: ${current} (first release); publishing.`);
+  setOutput('should_publish', 'true');
 } else {
   console.log(`npm package version unchanged at ${current}; skipping publish.`);
   setOutput('should_publish', 'false');
