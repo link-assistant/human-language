@@ -1,6 +1,13 @@
 //! Render Q/P sequences as Links Notation. Mirrors
 //! `js/src/transformation/lino-format.js`.
 
+use alloc::format;
+use alloc::string::{String, ToString};
+#[cfg(test)]
+use alloc::vec;
+use alloc::vec::Vec;
+
+#[cfg(feature = "std")]
 use lino_objects_codec::{decode, encode, CodecError, LinoValue};
 
 /// An item in the rendered sequence.
@@ -48,6 +55,7 @@ pub fn format_sequence_as_lino(sequence: &[SeqItem]) -> String {
 
 /// Encode string key/value configuration or state pairs with the upstream
 /// `lino-objects-codec` crate.
+#[cfg(feature = "std")]
 pub fn encode_string_pairs_as_lino<I, K, V>(pairs: I) -> String
 where
     I: IntoIterator<Item = (K, V)>,
@@ -63,6 +71,7 @@ where
 }
 
 /// Decode string key/value pairs produced by [`encode_string_pairs_as_lino`].
+#[cfg(feature = "std")]
 pub fn decode_string_pairs_from_lino(notation: &str) -> Result<Vec<(String, String)>, CodecError> {
     let value = decode(notation)?;
     let object = value
@@ -110,6 +119,7 @@ mod tests {
         );
     }
 
+    #[cfg(feature = "std")]
     #[test]
     fn string_pairs_roundtrip_through_lino_objects_codec() {
         let encoded = encode_string_pairs_as_lino([("host", "0.0.0.0"), ("port", "8080")]);

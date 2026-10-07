@@ -1,9 +1,9 @@
 [package]
 name = "human-language"
-version = "0.1.0"
+version = "0.2.2"
 edition = "2021"
-rust-version = "1.74"
-description = "Transform English text into sequences of Wikidata Q/P identifiers, with shared pure-function helpers (tokenization, n-grams, IPA routing, hash-route parsing) used by the npm package, the Docker microservice, and the in-browser SPA."
+rust-version = "1.85"
+description = "Data-driven language detection and metadata, with no_std + alloc helpers for tokenization, Wikidata Q/P Links Notation, and hash routing."
 license = "MIT"
 repository = "https://github.com/link-assistant/human-language"
 homepage = "https://github.com/link-assistant/human-language"
@@ -15,25 +15,31 @@ authors = ["link-assistant"]
 
 [lib]
 name = "human_language"
-crate-type = ["cdylib", "rlib"]
+crate-type = ["rlib"]
 
 [[bin]]
 name = "human-language"
 path = "src/bin/cli.rs"
+required-features = ["std"]
+
+[[example]]
+name = "language-detection"
+path = "examples/language-detection.rs"
+required-features = ["std"]
 
 [features]
-default = []
+default = ["std"]
+# CLI, configuration codec, and thread-local forced-language guards.
+std = ["dep:clap", "dep:lino-arguments", "dep:lino-objects-codec", "percent-encoding/std"]
 # Network-backed Wikidata client (reqwest + tokio). Kept opt-in so the core
 # crate compiles without an async runtime when used only for pure helpers.
-wikidata-client = ["reqwest", "tokio", "serde", "serde_json"]
+wikidata-client = ["std", "dep:reqwest", "dep:tokio", "dep:serde", "dep:serde_json"]
 
 [dependencies]
-clap = { version = "4.6.1", features = ["derive"] }
-lino-arguments = "0.3.0"
-lino-objects-codec = "0.2.1"
-once_cell = "1"
-percent-encoding = "2"
-regex = "1"
+clap = { version = "4.6.1", features = ["derive"], optional = true }
+lino-arguments = { version = "0.3.0", optional = true }
+lino-objects-codec = { version = "0.2.1", optional = true }
+percent-encoding = { version = "2", default-features = false, features = ["alloc"] }
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"], optional = true }
 serde = { version = "1", features = ["derive"], optional = true }
 serde_json = { version = "1", optional = true }

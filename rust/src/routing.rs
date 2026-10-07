@@ -1,5 +1,9 @@
 //! Hash-route parser / serializer. Mirrors `js/src/app/routing.js`.
 
+use alloc::string::{String, ToString};
+use alloc::vec;
+use alloc::vec::Vec;
+
 use percent_encoding::{percent_decode_str, utf8_percent_encode, AsciiSet, CONTROLS};
 
 const FRAGMENT: &AsciiSet = &CONTROLS

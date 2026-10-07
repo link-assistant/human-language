@@ -1,6 +1,11 @@
 //! Tokenization, n-gram generation, and the small word lists used by the
 //! text-to-Q/P transformer. Mirrors `js/src/transformation/text-to-qp-transformer.js`.
 
+use alloc::string::{String, ToString};
+#[cfg(test)]
+use alloc::vec;
+use alloc::vec::Vec;
+
 /// Default maximum n-gram length used by the transformer.
 pub const NGRAMS_DEFAULT_MAX: usize = 3;
 
