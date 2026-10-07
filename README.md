@@ -268,6 +268,15 @@ node js/scripts/e2e-test.mjs
 node js/scripts/limitation-test.mjs
 ```
 
+### Rust language detection
+
+The Rust crate includes deterministic detection for English, Russian, Hindi,
+Chinese and Spanish, with script ranges and lexical cues stored in Links
+Notation. Names, canonical word order and postposition flags are data as well.
+The library supports `no_std` + `alloc` with default features disabled.
+See [the Rust API and example](rust/README.md) and
+[package release setup](docs/releases.md).
+
 ### GHCR release bootstrap
 
 Docker publishing fails closed unless GHCR grants an anonymous pull token for

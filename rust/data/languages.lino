@@ -1,0 +1,21 @@
+languages
+  language en
+    name English
+    word-order SVO
+    adposition preposition
+  language ru
+    name Russian
+    word-order SVO
+    adposition preposition
+  language hi
+    name Hindi
+    word-order SOV
+    adposition postposition
+  language zh
+    name Chinese
+    word-order SVO
+    adposition postposition
+  language es
+    name Spanish
+    word-order SVO
+    adposition preposition

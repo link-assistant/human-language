@@ -21,6 +21,11 @@ on:
       - 'rust/**'
       - '.github/workflows/rust.yml'
   workflow_dispatch:
+    inputs:
+      force_publish:
+        description: 'Retry an unpublished version without another version bump'
+        type: boolean
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -58,7 +63,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: rust
-      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo clippy --all-targets --all-features --locked -- -D warnings
 
   test:
     name: cargo test
@@ -75,7 +80,46 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: rust
-      - run: cargo test --all-targets
+      - run: cargo test --all-targets --all-features --locked
+      - run: cargo test --doc --locked
+
+  no-std:
+    name: no_std + alloc (native and WASM)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [fmt]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust
+      - run: cargo clippy --no-default-features --all-targets --locked -- -D warnings
+      - run: cargo test --no-default-features --locked
+      - run: cargo build --lib --no-default-features --target wasm32-unknown-unknown --locked
+
+  package:
+    name: Verify crates.io package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [fmt]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust
+      - run: cargo publish --dry-run --locked
+      - name: Build the packaged no_std library
+        run: |
+          version=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].version')
+          cargo build --manifest-path "target/package/human-language-${version}/Cargo.toml" \
+            --lib --no-default-features --target wasm32-unknown-unknown --locked
 
   # === Publish to crates.io on version-advancing pushes to main =============
 
@@ -83,19 +127,25 @@ jobs:
     name: Detect Cargo.toml version bump
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    needs: [clippy, test]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: [clippy, test, no-std, package]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     outputs:
       should_publish: ${{ steps.diff.outputs.should_publish }}
       version: ${{ steps.diff.outputs.version }}
     steps:
       - uses: actions/checkout@v6
         with:
-          fetch-depth: 2
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
       - id: diff
         name: Compare versions
         working-directory: .
         run: node rust/scripts/check-cargo-version.mjs
+        env:
+          PREVIOUS_SHA: ${{ github.event.before }}
+          FORCE_PUBLISH: ${{ inputs.force_publish }}
 
   publish:
     name: cargo publish
@@ -112,7 +162,15 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: rust
-      - name: cargo publish --token $CARGO_REGISTRY_TOKEN
+      - name: Check crates.io credentials
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: |
+          if [ -z "$CARGO_REGISTRY_TOKEN" ]; then
+            echo '::error::Set CARGO_REGISTRY_TOKEN in the crates-io environment or repository. See docs/releases.md.'
+            exit 1
+          fi
+      - name: cargo publish
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: cargo publish --locked
